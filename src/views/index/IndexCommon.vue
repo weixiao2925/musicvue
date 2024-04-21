@@ -60,9 +60,9 @@ watch(activeTab, (newVal) => {
 </script>
 
 <template>
-  <div id="menu_left" style="float: left;">
+  <div id="menu_left" style="float: left;height: 100vh;background-color: #cee7c9">
     <div>
-      <div style="float:left;">
+      <div style="float:left;height: 100%;">
         <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">xxx管理系统</div>
         <el-menu
             :default-active="index_c"
@@ -96,42 +96,46 @@ watch(activeTab, (newVal) => {
           </el-button>
         </el-radio-group>
       </div>
-      <!-- 顶部Tab显示区域 -->
-      <div id="tabs-container" style="float:left;">
-        <el-tabs v-model="activeTab" type="card" closable @tab-remove="closeTab" @update:modelValue="activateMenu">
-          <el-tab-pane
-              v-for="tab in tabs"
-              :key="tab.index"
-              :label="tab.title"
-              :name="tab.index"
-          >
-          </el-tab-pane>
-        </el-tabs>
+    </div>
+  </div>
+
+<!--  顶部-->
+  <div >
+    <div id="tabs-container" style="float:left;">
+      <el-tabs v-model="activeTab" type="card" closable @tab-remove="closeTab" @update:modelValue="activateMenu">
+        <el-tab-pane
+            v-for="tab in tabs"
+            :key="tab.index"
+            :label="tab.title"
+            :name="tab.index"
+        >
+        </el-tab-pane>
+      </el-tabs>
+    </div>
+    <div id="menu_top" style="float:right;">
+      <div style="float: right">
+        <el-dropdown  type="primary">
+          <div>
+            <div style="float:left;padding: 1px 0 0 0;">
+              <el-avatar :size="'default'" style=""/>
+            </div>
+            <transition name="el-fade-in">
+              <div style="font-size: 1rem;float: right;padding: 10px ;">
+                {{data.test}}
+              </div>
+            </transition>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>个人中心</el-dropdown-item>
+              <el-dropdown-item>退出登录</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
     </div>
   </div>
-  <div id="menu_top" style="float:right;">
-    <div style="float: right">
-      <el-dropdown  type="primary">
-        <div>
-          <div style="float:left;padding: 1px 0 0 0;">
-            <el-avatar :size="'default'" style=""/>
-          </div>
-          <transition name="el-fade-in">
-            <div style="font-size: 1rem;float: right;padding: 10px ;">
-              {{data.test}}
-            </div>
-          </transition>
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出登录</el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
-    </div>
-  </div>
+
 
 </template>
 

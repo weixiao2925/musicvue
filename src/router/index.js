@@ -17,7 +17,13 @@ const routes=[
         path:"/index",
         name:"index",
         component:()=>import("@/views/indexPage.vue"),
-
+        children: [
+            {
+                path:"",
+                name:"index-home",
+                component:()=>import("@/views/index/IndexHome.vue")
+            }
+        ]
     }
 
 ]

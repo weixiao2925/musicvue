@@ -5,6 +5,7 @@ import IndexCommon from "@/views/index/IndexCommon.vue";
 
 <template>
   <IndexCommon/>
+  <router-view/>
 </template>
 
 <style scoped>
