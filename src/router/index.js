@@ -22,6 +22,16 @@ const routes=[
                 path:"",
                 name:"index-home",
                 component:()=>import("@/views/index/IndexHome.vue")
+            },
+            {
+                path:"/index-user",
+                name:"index-user",
+                component:()=>import("@/views/index/IndexUserManagement.vue")
+            },
+            {
+                path:"/index-singer",
+                name:"index-singer",
+                component:()=>import("@/views/index/IndexSingerManagement.vue")
             }
         ]
     }

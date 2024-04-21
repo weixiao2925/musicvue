@@ -2,6 +2,7 @@
 
 import {reactive, ref, watch} from "vue";
 import {House, Location, MoreFilled, Notification, Operation} from "@element-plus/icons-vue";
+import {useRouter} from "vue-router";
 
 const data=reactive({
   test:"www",
@@ -26,15 +27,20 @@ const tabs = ref([]); // 存储打开的Tabs
 const activeTab = ref(''); // 当前激活的Tab
 
 // ...其他代码保持不变
-
+const router = useRouter();
 // 打开或激活一个Tab
-const openTab = (index, title) => {
+const openTab = (index, title, routePath) => {
   let tab = tabs.value.find(t => t.index === index);
   if (!tab) {
     tab = { index, title };
     tabs.value.push(tab);
   }
   activeTab.value = index;
+
+  // 使用编程式导航切换路由
+  if (routePath) {
+    router.push(routePath);
+  }
 };
 
 // 关闭一个Tab
@@ -57,6 +63,8 @@ const activateMenu = (index) => {
 watch(activeTab, (newVal) => {
   activateMenu(newVal);
 });
+//导航
+
 </script>
 
 <template>
@@ -71,19 +79,20 @@ watch(activeTab, (newVal) => {
             @open="handleOpen"
             @close="handleClose"
         >
-          <el-menu-item index="1" @click="openTab('1', '系统首页')">
+
+          <el-menu-item index="1" @click="openTab('1', '系统首页','/index')">
             <el-icon size="15px"><House /></el-icon>
             <template #title>系统首页</template>
           </el-menu-item>
-          <el-menu-item index="2" @click="openTab('2', '用户管理')">
+          <el-menu-item index="2" @click="openTab('2', '用户管理','/index-user')">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>用户管理</template>
           </el-menu-item>
-          <el-menu-item index="3" @click="openTab('3', 'xx管理')">
+          <el-menu-item index="3" @click="openTab('3', 'xx管理','/index-singer')">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
-          <el-menu-item index="4" @click="openTab('4', 'xx管理')">
+          <el-menu-item index="4" @click="openTab('4', 'xx管理','/index-singer')">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
