@@ -1,13 +1,10 @@
 <script setup>
 
+import IndexCommon from "@/views/index/IndexCommon.vue";
 </script>
 
 <template>
-  <div>
-    <el-button>
-      测试
-    </el-button>
-  </div>
+  <IndexCommon/>
 </template>
 
 <style scoped>
