@@ -100,8 +100,8 @@ watch(activeTab, (newVal) => {
   </div>
 
 <!--  顶部-->
-  <div >
-    <div id="tabs-container" style="float:left;">
+  <div style="display:flex;">
+    <div id="tabs-container" style="flex-grow: 1;">
       <el-tabs v-model="activeTab" type="card" closable @tab-remove="closeTab" @update:modelValue="activateMenu">
         <el-tab-pane
             v-for="tab in tabs"
@@ -144,6 +144,10 @@ watch(activeTab, (newVal) => {
     width: auto;
     height: 2.1rem;
     background-color: #11ff00;
+  }
+  #tabs-container {
+    /* 确保tabs-container可以根据内容自动伸缩，并填充额外空间 */
+    flex-grow: 1;
   }
   .el-menu-vertical-demo:not(.el-menu--collapse) {
     width: 150px;
