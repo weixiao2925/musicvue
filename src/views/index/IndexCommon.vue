@@ -1,7 +1,7 @@
 <script setup>
 
 import {reactive, ref, watch} from "vue";
-import {House, Location, MoreFilled, Notification, Operation} from "@element-plus/icons-vue";
+import {House, Notification, Operation} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
 
 const data=reactive({
@@ -22,48 +22,7 @@ const toggleCollapse = () => {
   isCollapse.value = !isCollapse.value;
 };
 
-//-----tab测试
-const tabs = ref([]); // 存储打开的Tabs
-const activeTab = ref(''); // 当前激活的Tab
 
-// ...其他代码保持不变
-const router = useRouter();
-// 打开或激活一个Tab
-const openTab = (index, title, routePath) => {
-  let tab = tabs.value.find(t => t.index === index);
-  if (!tab) {
-    tab = { index, title };
-    tabs.value.push(tab);
-  }
-  activeTab.value = index;
-
-  // 使用编程式导航切换路由
-  if (routePath) {
-    router.push(routePath);
-  }
-};
-
-// 关闭一个Tab
-const closeTab = (tabIndex) => {
-  const index = tabs.value.findIndex(t => t.index === tabIndex);
-  if (index !== -1) {
-    tabs.value.splice(index, 1);
-
-    // 如果关闭的是当前激活的Tab，并且还有其它Tab打开，激活最后一个Tab
-    if (activeTab.value === tabIndex && tabs.value.length) {
-      activeTab.value = tabs.value[tabs.value.length - 1].index;
-    }
-  }
-};
-// 添加激活对应菜单的逻辑
-const activateMenu = (index) => {
-  index_c.value = index;
-};
-
-watch(activeTab, (newVal) => {
-  activateMenu(newVal);
-});
-//导航
 
 </script>
 
@@ -80,19 +39,19 @@ watch(activeTab, (newVal) => {
             @close="handleClose"
         >
 
-          <el-menu-item index="1" @click="openTab('1', '系统首页','/index')">
+          <el-menu-item index="1" >
             <el-icon size="15px"><House /></el-icon>
             <template #title>系统首页</template>
           </el-menu-item>
-          <el-menu-item index="2" @click="openTab('2', '用户管理','/index-user')">
+          <el-menu-item index="2" >
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>用户管理</template>
           </el-menu-item>
-          <el-menu-item index="3" @click="openTab('3', 'xx管理','/index-singer')">
+          <el-menu-item index="3" >
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
-          <el-menu-item index="4" @click="openTab('4', 'xx管理','/index-singer')">
+          <el-menu-item index="4" >
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
@@ -110,16 +69,8 @@ watch(activeTab, (newVal) => {
 
 <!--  顶部-->
   <div style="display:flex;">
-    <div id="tabs-container" style="flex-grow: 1;">
-      <el-tabs v-model="activeTab" type="card" closable @tab-remove="closeTab" @update:modelValue="activateMenu">
-        <el-tab-pane
-            v-for="tab in tabs"
-            :key="tab.index"
-            :label="tab.title"
-            :name="tab.index"
-        >
-        </el-tab-pane>
-      </el-tabs>
+    <div id="tabs-container" style="flex-grow: 1;background-color: #11ff00">
+<!--        先占一行-->
     </div>
     <div id="menu_top" style="float:right;">
       <div style="float: right">
