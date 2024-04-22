@@ -77,14 +77,12 @@ function goTo(route) {
 </template>
 
 <style scoped>
-#menu_top{
-  width: auto;
-  height: 2.1rem;
-  background-color: #11ff00;
-}
-#tabs-container {
-  /* 确保tabs-container可以根据内容自动伸缩，并填充额外空间 */
-  flex-grow: 1;
+
+#menu_left{
+  float: left;
+  height: 100vh;
+  background-color: #cee7c9;
+  overflow-y: auto; /* 让菜单可以垂直滚动 */
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 150px;

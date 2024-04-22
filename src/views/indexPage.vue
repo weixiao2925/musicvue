@@ -5,12 +5,32 @@ import IndexCommonLeft from "@/views/index/indexcommon/IndexCommonLeft.vue";
 </script>
 
 <template>
-
-  <IndexCommonLeft/>
-  <IndexCommonTop/>
-  <router-view/>
+  <div class="container">
+    <div class="sidebar">
+      <IndexCommonLeft/>
+    </div>
+    <div class="content">
+      <IndexCommonTop/>
+      <router-view/>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+.container {
+  display: flex;
+}
 
+.sidebar {
+  position: sticky; /* 这使侧边栏在指定位置粘住 */
+  top: 0; /* 从视口顶部0px处开始固定位置 */
+  height: 100vh; /* 全高 */
+  overflow-x: hidden; /* 防止水平滚动 */
+  overflow-y: auto; /* 允许竖向滚动 */
+}
+
+.content {
+  flex-grow: 1; /* 让主体内容区域占据剩余空间 */
+  overflow-x: hidden; /* 防止水平滚动 */
+}
 </style>

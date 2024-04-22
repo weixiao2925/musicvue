@@ -1,11 +1,12 @@
 <script setup>
 
+import IndexHomeDataField from "@/views/index/indexhome/IndexHomeDataField.vue";
+import IndexHomeGraph from "@/views/index/indexhome/IndexHomeGraph.vue";
 </script>
 
 <template>
-    <div>
-      系统首页
-    </div>
+  <IndexHomeDataField/>
+  <IndexHomeGraph/>
 </template>
 
 <style scoped>
