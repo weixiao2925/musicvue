@@ -31,7 +31,7 @@ function goTo(route) {
 </script>
 
 <template>
-  <div id="menu_left" style="float: left;height: 100vh;background-color: #cee7c9">
+  <div id="menu_left">
     <div>
       <div style="float:left;height: 100%;">
         <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">xxx管理系统</div>
@@ -41,8 +41,8 @@ function goTo(route) {
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
+            style="height: 100%"
         >
-
           <el-menu-item index="1" @click="goTo('/index')">
             <el-icon size="15px"><House /></el-icon>
             <template #title>系统首页</template>
@@ -70,10 +70,6 @@ function goTo(route) {
       </div>
     </div>
   </div>
-
-
-
-
 </template>
 
 <style scoped>
@@ -82,7 +78,6 @@ function goTo(route) {
   float: left;
   height: 100vh;
   background-color: #cee7c9;
-  overflow-y: auto; /* 让菜单可以垂直滚动 */
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 150px;
