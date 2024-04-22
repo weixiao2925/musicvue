@@ -2,7 +2,6 @@
 
 import {reactive, ref, watch} from "vue";
 import {House, Notification, Operation} from "@element-plus/icons-vue";
-import {useRouter} from "vue-router";
 
 const data=reactive({
   test:"www",
@@ -10,7 +9,7 @@ const data=reactive({
 
 //默认状态（true为伸展）
 const isCollapse=ref(true)
-const index_c=ref('1')
+const index_c=ref('/index')
 const handleOpen=(key,keyPath)=>{
   console.log(key,keyPath)
 }
@@ -22,10 +21,7 @@ const toggleCollapse = () => {
   isCollapse.value = !isCollapse.value;
 };
 //跳转
-const router=useRouter()
-function goTo(route) {
-  router.push(route)
-}
+
 
 
 </script>
@@ -41,21 +37,22 @@ function goTo(route) {
             class="el-menu-vertical-demo"
             @open="handleOpen"
             @close="handleClose"
-            style="height: 100%"
+            style="height: 100vh"
+            :router="true"
         >
-          <el-menu-item index="1" @click="goTo('/index')">
+          <el-menu-item index="/index">
             <el-icon size="15px"><House /></el-icon>
             <template #title>系统首页</template>
           </el-menu-item>
-          <el-menu-item index="2" @click="goTo('/index-user')">
+          <el-menu-item index="/index-user">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>用户管理</template>
           </el-menu-item>
-          <el-menu-item index="3" @click="goTo('/index-singer')">
+          <el-menu-item index="/index-singer">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
-          <el-menu-item index="4" @click="goTo('/index-singer')">
+          <el-menu-item index="/index-singer">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
@@ -78,9 +75,10 @@ function goTo(route) {
   float: left;
   height: 100vh;
   background-color: #cee7c9;
+  overflow-y:hidden; /* 不允许竖向滚动 */
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 150px;
-  height: 100%;
+  height: 100vh;
 }
 </style>
