@@ -108,7 +108,7 @@ const tableData = [
             </el-button>
           </template>
         </el-table-column>
-        <el-table-column label="操作" property="name7" align="center">
+        <el-table-column label="操作" property="name7" align="center" min-width="60">
           <template #default="row">
             <el-button>编辑</el-button>
             <el-button type="danger">删除</el-button>
