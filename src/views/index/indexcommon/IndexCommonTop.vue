@@ -9,7 +9,7 @@ const data=reactive({
 <template>
   <!--  顶部-->
   <div style="display:flex;">
-    <div id="tabs-container" style="flex-grow: 1;background-color: #11ff00">
+    <div id="tabs-container" style="flex-grow: 1;background-color: #96ff7f">
       <!--        先占一行-->
     </div>
     <div id="menu_top" style="float:right;">

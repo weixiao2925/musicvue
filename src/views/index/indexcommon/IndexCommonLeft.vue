@@ -27,9 +27,9 @@ const toggleCollapse = () => {
 </script>
 
 <template>
-  <div id="menu_left">
+  <div >
     <div>
-      <div style="float:left;height: 100%;">
+      <div id="menu_left" style="float:left;height: 100%;">
         <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">xxx管理系统</div>
         <el-menu
             :default-active="index_c"
@@ -52,7 +52,7 @@ const toggleCollapse = () => {
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
-          <el-menu-item index="/index-singer">
+          <el-menu-item index="/index-playlist">
             <el-icon size="15px"><Notification /></el-icon>
             <template #title>xx管理</template>
           </el-menu-item>
@@ -75,7 +75,6 @@ const toggleCollapse = () => {
   float: left;
   height: 100vh;
   background-color: #cee7c9;
-  overflow-y:hidden; /* 不允许竖向滚动 */
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 150px;

@@ -32,6 +32,10 @@ const routes=[
                 path:"/index-singer",
                 name:"index-singer",
                 component:()=>import("@/views/index/IndexSingerManagement.vue")
+            },{
+                path:"/index-playlist",
+                name:"index-playlist",
+                component:()=>import("@/views/index/IndexPlaylistManagement.vue")
             },
             {
                 path:"/index-test",
