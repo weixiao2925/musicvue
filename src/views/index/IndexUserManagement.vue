@@ -79,7 +79,6 @@ const tableData = [
         <el-button type="danger">批量删除</el-button>
       </div>
 
-
   <div>
     <el-table
       ref="multipleTableRef"
