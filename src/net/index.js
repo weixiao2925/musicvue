@@ -1,6 +1,9 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
-//----常量区
+
+/**
+ * ----常量区
+ */
 const authItemName="access_token"//相当于键值对的键
 
 //----内外通用功能区
@@ -14,10 +17,25 @@ function loginP(email,password,remember,success, failure = defaultFailure) {
     },(data)=>{
         storeAccessToken(remember,data.token,data.expire)
         ElMessage.success(`登陆成功,欢迎${data.username}`)
+        success(data)
+    },failure)
+}
+//内外部通用携带请求头的get(2)
+function get(url,success,failure=defaultFailure) {
+    internalGet(url,accessHeader(),success,failure)
+}
+//内外部通用携带请求头的post(2)
+function post(url,data, success, failure=defaultFailure) {
+    internalPost(url,data,accessHeader(),success,failure)
+}
+//退出登录(2)
+function logout(success,failure=defaultFailure) {
+    get('api/auth/logout',()=>{
+        delAccessToken()
+        ElMessage.success('退出登录成功，欢迎再次使用')
         success()
     },failure)
 }
-
 
 
 
@@ -61,8 +79,34 @@ function storeAccessToken(remember,token, expire) {
     else
         sessionStorage.setItem(authItemName,str);
 }
+//删除token(2)
+function delAccessToken() {
+    localStorage.removeItem(authItemName);
+    sessionStorage.removeItem(authItemName);
+}
+//取出token(2)
+function takeAccessToken() {
+    const str=localStorage.getItem(authItemName) || sessionStorage.getItem(authItemName);
+    if (!str) return null;
+    const authObj=JSON.parse(str)
+    if (authObj.expire <= new Date()){
+        delAccessToken()
+        ElMessage.warning("已过期")
+        return null;
+    }
+    return authObj.token
+}
+//获取请求头(2)
+function accessHeader() {
+    const token=takeAccessToken()
+    //判断是否有token
+    return token?{'Authorization':`Bearer ${takeAccessToken()}`}:{}
+}
 
 //----暴露区
 export {
     loginP,
+    logout,
+    get,
+    post,
 }

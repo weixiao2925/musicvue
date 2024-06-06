@@ -1,20 +1,22 @@
 <script setup>
 
-import {reactive, ref, watch} from "vue";
+import {ref} from "vue";
 import {House, Notification, Operation} from "@element-plus/icons-vue";
+import {menuInfoStore} from "@/store/menu.js";
 
-const data=reactive({
-  test:"www",
-})
+// 获取仓库数据
+const indexRouter=menuInfoStore()
 
 //默认状态（true为伸展）
-const isCollapse=ref(true)
-const index_c=ref('/index')
-const handleOpen=(key,keyPath)=>{
-  console.log(key,keyPath)
+const isCollapse=ref(false)
+const index_route=ref('/index')
+const handleSelect=(key, keyPath)=>{
+  // console.log(key,keyPath)
+  indexRouter.setIndexRoute(key) // 使用 action 更新状态
+
 }
 const handleClose=(key,keyPath)=>{
-  console.log(key,keyPath)
+  // console.log(key,keyPath)
 }
 //伸缩按钮
 const toggleCollapse = () => {
@@ -27,15 +29,16 @@ const toggleCollapse = () => {
 </script>
 
 <template>
+<!--  {{indexRouter.index_route}}-->
   <div >
     <div>
       <div id="menu_left" style="float:left;height: 100%;">
         <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">xxx管理系统</div>
         <el-menu
-            :default-active="index_c"
+            :default-active="indexRouter.index_route"
             :collapse="isCollapse"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
+            @select="handleSelect"
             @close="handleClose"
             style="height: 100vh"
             :router="true"
@@ -60,7 +63,7 @@ const toggleCollapse = () => {
       </div>
       <div style="float:left;">
         <el-radio-group v-model="isCollapse">
-          <el-button @click="toggleCollapse" style="height: 2rem" plain >
+          <el-button @click="toggleCollapse" style="height: 2rem" >
             <el-icon ><Operation /></el-icon>
           </el-button>
         </el-radio-group>

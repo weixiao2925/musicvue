@@ -26,7 +26,10 @@ const routes=[
             {
                 path:"/index-user",
                 name:"index-user",
-                component:()=>import("@/views/index/IndexUserManagement.vue")
+                component:()=>import("@/views/index/IndexUserManagement.vue"),
+                children:[
+
+                ]
             },
             {
                 path:"/index-singer",
@@ -40,12 +43,27 @@ const routes=[
                 path:"/index-song",
                 name:"index-song",
                 component:()=>import("@/views/index/IndexSongManagement.vue")
+            },{
+                path:"/index-individual",
+                name:"index-individual",
+                component:()=>import("@/views/index/IndexPersonalPage.vue")
             },
             {
                 path:"/index-test",
                 name:"index-test",
                 component:()=>import("@/views/index/Test.vue")
+            },
+            {
+                path:"/index-userEditor",
+                name:"index-userEditor",
+                component:()=>import("@/views/index/indexUserManagement/UserEditingPage.vue")
+            },
+            {
+                path:"/index-singerEditor",
+                name:"index-singerEditor",
+                component:()=>import("@/views/index/indexSingerManagement/IndexEditingPage.vue")
             }
+
         ]
     }
 

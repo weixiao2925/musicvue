@@ -1,9 +1,34 @@
 <script setup>
 import {reactive} from "vue";
+import {userInfoStore} from "@/store/user.js";
+import {logout} from "@/net/index.js";
+import {useRouter} from "vue-router";
 
-const data=reactive({
-  test:"www",
+
+
+//跳转
+const router=useRouter()
+function goTo(route) {
+  router.push(route)
+}
+
+function lougoutP() {
+  logout(()=>{
+    goTo('/')
+  })
+}
+function personage() {
+    goTo('/index-individual')
+}
+
+//公共仓库
+const userStore=userInfoStore()
+// console.log(userStore.name)
+//用户信息赋值
+const tableData=reactive({
+  test:userStore.name,
 })
+
 </script>
 
 <template>
@@ -21,14 +46,14 @@ const data=reactive({
             </div>
             <transition name="el-fade-in">
               <div style="font-size: 1rem;float: right;padding: 10px ;">
-                {{data.test}}
+                {{tableData.test}}
               </div>
             </transition>
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>个人中心</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item @click="personage">个人中心</el-dropdown-item>
+              <el-dropdown-item @click="lougoutP">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>

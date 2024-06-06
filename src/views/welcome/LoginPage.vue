@@ -4,6 +4,7 @@ import {reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import {loginP} from "@/net/index.js";
 import {useRouter} from "vue-router";
+import {userInfoStore} from "@/store/user.js";
 
 const form=reactive({
   email:'',
@@ -40,10 +41,20 @@ const router=useRouter()
 function goTo(route) {
   router.push(route)
 }
+//获取pinia数据并存入
+
 //登录
 function userLogin() {
+  const userStore=userInfoStore()
   loginP(form.email,form.password,form.remember_me,
-      ()=>{goTo('/index')})
+      (data)=>{
+        userStore.email=data.username
+        userStore.name=data.name;
+        userStore.role=data.role;
+        // console.log(userStore.name)
+        // console.log(data)
+    goTo('/index')
+  })
 }
 </script>
 

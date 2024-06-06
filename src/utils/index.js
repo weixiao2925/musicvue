@@ -5,3 +5,6 @@ function goTo(route) {
     router.push(route)
 }
 
+export {
+    goTo,
+}
