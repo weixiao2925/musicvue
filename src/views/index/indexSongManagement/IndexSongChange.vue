@@ -4,12 +4,15 @@ import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 import {get,uploadFile} from "@/net/index.js";
 import {UploadFilled} from "@element-plus/icons-vue";
 import {singerInfoStore} from "@/store/singer.js";
+import {playlistInfoStore} from "@/store/playlist.js";
 
 const props=defineProps({
   song_id:String,
+  isSinger:Boolean
 })
 const form=reactive({
   isDisabled:true,
+  isSinger:props.isSinger,
 
   song_id:props.song_id,
   title:"",
@@ -55,15 +58,24 @@ const quit=()=>{
   })
 }
 
-//给表格赋值
+//根据表单还是歌手给表格赋值
 //获取仓库信息
-const singerData=singerInfoStore()
 function getUserData() {
-  get(`/api/index/getSongDataOne?singer_id=${singerData.singer_id}&song_id=${form.song_id}`,(data)=>{
-    form.title=data.songDataOne.title
-    form.songType=data.songDataOne.songType
-    form.release_date=data.songDataOne.release_date
-  })
+  if (form.isSinger){
+    const singerData=singerInfoStore()
+    get(`/api/index/getSongDataOne?singer_id=${singerData.singer_id}&song_id=${form.song_id}`,(data)=>{
+      form.title=data.songDataOne.title
+      form.songType=data.songDataOne.songType
+      form.release_date=data.songDataOne.release_date
+    })
+  }else {
+    const playlistData=playlistInfoStore()
+    get(`/api/index/getSongDataOne_P?playlist_id=${playlistData.playlist_id}&song_id=${form.song_id}`,(data)=>{
+      form.title=data.songDataOne.title
+      form.songType=data.songDataOne.songType
+      form.release_date=data.songDataOne.release_date
+    })
+  }
 }
 getUserData()
 

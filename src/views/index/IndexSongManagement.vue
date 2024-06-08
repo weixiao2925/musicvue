@@ -9,6 +9,7 @@ import {get} from "@/net/index.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
 import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongChange.vue";
+import IndexSongChange from "@/views/index/indexSongManagement/IndexSongChange.vue";
 
 
 
@@ -177,7 +178,7 @@ function handDeleteSong(row){
       destroy-on-close
       @closed="getData"
   >
-    <IndexSongAdd :song_id="song_id.valueOf()"/>
+    <IndexSongChange :song_id="song_id.valueOf()" :is-singer="true"/>
   </el-dialog>
 
   <div>
