@@ -114,7 +114,7 @@ const payloadOne=ref([])
 const deletePlayList=()=>{
   // 将数组转换成以逗号分隔的字符串
   const playListIds = payloadOne.value.join(',');
-  get(`/api/index/deletePlayLists?singerIds=${playListIds}`, (data)=>{
+  get(`/api/index/deletePlayLists?playListIds=${playListIds}`, (data)=>{
     ElMessage.success("删除成功");
     getData(currentPage.value)
   })

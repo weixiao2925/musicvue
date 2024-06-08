@@ -8,6 +8,7 @@ import {useRouter} from "vue-router";
 import {get} from "@/net/index.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
+import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongChange.vue";
 
 
 
@@ -45,17 +46,6 @@ async function getData(page = currentPage.value) {
     tableData.value = data.songDataList;
     pageCount.value=data.count;
   })
-  // try {
-  //   // 等待 axios 请求完成
-  //   const response = await get(`http://localhost:8081/data2?page=${page}&pageSize=${pageSize.value}`);
-  //   // 赋值操作
-  //   tableData.value=response.data.userDataList;
-  //   pageCount.value=response.data.count
-  //   // console.log(tableData)
-  //   // console.log(pageCount.value)
-  // } catch (error) {
-  //   console.error(error);
-  // }
 }
 
 getData(1)
@@ -73,9 +63,12 @@ function getSearch(page) {
   })
 }
 
-//----添加数据
-const dialogFormVisible = ref(false)
-function test() {
+//----编辑数据
+const dialogFormVisible = ref(false)//默认关闭状态
+const song_id=ref("")//song_id
+function changeInfoDialog(row) {
+  song_id.value=row.row.song_id;
+  // console.log(song_id.value)
   dialogFormVisible.value = !dialogFormVisible.value
   // console.log(dialogFormVisible.value)
 }
@@ -169,15 +162,22 @@ function handDeleteSong(row){
   <el-row>
     <el-col :span="2">
       <div>
-        <el-button type="success" @click="test">添加</el-button>
+        <el-button type="success" @click="changeInfoDialog">添加</el-button>
       </div>
     </el-col>
     <el-col :span="2">
 
     </el-col>
   </el-row>
-  <el-dialog v-model="dialogFormVisible" center>
-    <IndexSingerAdd/>
+  <el-dialog
+      v-model="dialogFormVisible"
+      center
+      align-center
+      draggable
+      destroy-on-close
+      @closed="getData"
+  >
+    <IndexSongAdd :song_id="song_id.valueOf()"/>
   </el-dialog>
 
   <div>
@@ -204,7 +204,7 @@ function handDeleteSong(row){
         <template #default="row">
           <el-space direction="vertical">
             <div>
-              <el-button size="small">更新图片</el-button>
+              <el-button size="small">更新音频</el-button>
             </div>
             <div>
               <el-button size="small">更新歌词</el-button>
@@ -214,7 +214,7 @@ function handDeleteSong(row){
       </el-table-column>
       <el-table-column label="操作" property="name7" align="center" min-width="60">
         <template #default="row">
-          <el-button>编辑</el-button>
+          <el-button @click="changeInfoDialog(row)">编辑</el-button>
           <el-button type="danger" @click="handDeleteSong(row)">删除</el-button>
         </template>
       </el-table-column>

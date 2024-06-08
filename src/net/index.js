@@ -36,7 +36,10 @@ function logout(success,failure=defaultFailure) {
         success()
     },failure)
 }
-
+//上传文件
+function uploadFile(url,data,success,failure=defaultFailure) {
+    internalPost(url,data,accessHeader_form_data(),success,failure)
+}
 
 
 //----内部工具方法区
@@ -102,11 +105,16 @@ function accessHeader() {
     //判断是否有token
     return token?{'Authorization':`Bearer ${takeAccessToken()}`}:{}
 }
-
+//获取请求头(2)+提交类型为表单
+function accessHeader_form_data() {
+    const token=takeAccessToken()
+    return token?{'Authorization':`Bearer ${token}`,'Content-Type': 'multipart/form-data'}:{}
+}
 //----暴露区
 export {
     loginP,
     logout,
     get,
     post,
+    uploadFile
 }

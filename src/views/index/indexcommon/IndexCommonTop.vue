@@ -46,7 +46,7 @@ const tableData=reactive({
             </div>
             <transition name="el-fade-in">
               <div style="font-size: 1rem;float: right;padding: 10px ;">
-                {{tableData.test}}
+                {{tableData.changeInfoDialog}}
               </div>
             </transition>
           </div>

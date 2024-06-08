@@ -190,6 +190,7 @@ function editingSinger(row) {
   <el-dialog v-model="dialogFormVisible"
              destroy-on-close
              center
+             draggable
   >
     <IndexSingerAdd :currentPage="currentPage" :getData="getData"/>
   </el-dialog>
@@ -213,8 +214,8 @@ function editingSinger(row) {
         </el-table-column>
         <el-table-column label="用户名" property="singer_name" align="center" min-width="40"/>
         <el-table-column label="性别" property="sex" align="center" min-width="20"/>
-        <el-table-column label="生日" property="nationality" align="center" min-width="60"/>
-        <el-table-column label="地区" property="birth_date" align="center" min-width="60"/>
+        <el-table-column label="生日" property="birth_date" align="center" min-width="60"/>
+        <el-table-column label="地区" property="nationality" align="center" min-width="60"/>
         <el-table-column label="简介" property="intro" align="center" show-overflow-tooltip min-width="80"/>
         <el-table-column label="xx管理" property="userSex" align="center" min-width="60">
           <template #default="row">
