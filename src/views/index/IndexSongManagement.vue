@@ -8,8 +8,9 @@ import {useRouter} from "vue-router";
 import {get} from "@/net/index.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
-import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongChange.vue";
+
 import IndexSongChange from "@/views/index/indexSongManagement/IndexSongChange.vue";
+import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongAdd.vue";
 
 
 
@@ -65,15 +66,19 @@ function getSearch(page) {
 }
 
 //----编辑数据
-const dialogFormVisible = ref(false)//默认关闭状态
+const dialogFormSongInfoVisible = ref(false)//默认关闭状态
 const song_id=ref("")//song_id
 function changeInfoDialog(row) {
   song_id.value=row.row.song_id;
   // console.log(song_id.value)
-  dialogFormVisible.value = !dialogFormVisible.value
+  dialogFormSongInfoVisible.value = !dialogFormSongInfoVisible.value
   // console.log(dialogFormVisible.value)
 }
-
+//----添加数据
+const dialogFormSongAddVisible = ref(false)//默认关闭状态
+function changeAddDialog(row) {
+  dialogFormSongAddVisible.value = !dialogFormSongAddVisible.value
+}
 //----删除
 //--批量删除
 //接收选择框的id
@@ -163,7 +168,7 @@ function handDeleteSong(row){
   <el-row>
     <el-col :span="2">
       <div>
-        <el-button type="success" @click="changeInfoDialog">添加</el-button>
+        <el-button type="success" @click="changeAddDialog">添加</el-button>
       </div>
     </el-col>
     <el-col :span="2">
@@ -171,7 +176,7 @@ function handDeleteSong(row){
     </el-col>
   </el-row>
   <el-dialog
-      v-model="dialogFormVisible"
+      v-model="dialogFormSongInfoVisible"
       center
       align-center
       draggable
@@ -180,7 +185,16 @@ function handDeleteSong(row){
   >
     <IndexSongChange :song_id="song_id.valueOf()" :is-singer="true"/>
   </el-dialog>
-
+  <el-dialog
+      v-model="dialogFormSongAddVisible"
+      center
+      align-center
+      draggable
+      destroy-on-close
+      @closed="getData"
+  >
+    <IndexSongAdd />
+  </el-dialog>
   <div>
     <el-table
         ref="multipleTableRef"
@@ -191,17 +205,17 @@ function handDeleteSong(row){
         flexible
     >
       <el-table-column  type="selection"/>
-      <el-table-column  label="用户id" property="song_id"  align="center" min-width="20"/>
-      <el-table-column label="用户图片"  align="center" min-width="40">
+      <el-table-column  label="歌曲id" property="song_id"  align="center" min-width="20"/>
+      <el-table-column label="歌曲图片"  align="center" min-width="40">
         <template #default="row">
           <el-avatar shape="square" :size="80" :src="row.row.avatarUrl" />
           <el-button size="small">更新图片</el-button>
         </template>
       </el-table-column>
-      <el-table-column label="用户名" property="title" align="center" min-width="40"/>
+      <el-table-column label="歌曲名" property="title" align="center" min-width="40"/>
       <el-table-column label="类型" property="songType" align="center" min-width="30"/>
       <el-table-column label="歌词" property="xx" align="center"  min-width="160"/>
-      <el-table-column label="xx管理" property="userSex" align="center" min-width="35">
+      <el-table-column label="音频管理" property="userSex" align="center" min-width="35">
         <template #default="row">
           <el-space direction="vertical">
             <div>

@@ -1,20 +1,18 @@
 <script setup>
 import {reactive, ref} from "vue";
 import {ElMessage, ElMessageBox, genFileId} from "element-plus";
-import {get,uploadFile} from "@/net/index.js";
+import {get, post, uploadFile} from "@/net/index.js";
 import {UploadFilled} from "@element-plus/icons-vue";
 import {singerInfoStore} from "@/store/singer.js";
 import {playlistInfoStore} from "@/store/playlist.js";
 
-const props=defineProps({
-  song_id:String,
-  isSinger:Boolean
-})
+// const props=defineProps({
+//   song_id:String,
+//   isSinger:Boolean
+// })
 const form=reactive({
   isDisabled:true,
-  isSinger:props.isSinger,
 
-  song_id:props.song_id,
   title:"",
   songType:"",
   release_date:"",
@@ -27,7 +25,7 @@ const changeDisable=()=>{
 }
 const affirm=()=>{
   ElMessageBox.confirm(
-      '是否确认该编辑',
+      '是否确认该添加',
       'warning',
       {
         confirmButtonText:'确认',
@@ -36,14 +34,14 @@ const affirm=()=>{
       }
   ).then(()=>{
     changeDisable()
-    changeData()
+    addData()
   }).catch(()=>{
-    // ElMessage.error("修改失败")
+    // ElMessage.error("添加失败")
   })
 }
 const quit=()=>{
   ElMessageBox.confirm(
-      '是否退出编辑（表单内容将会清除）',
+      '是否退出添加信息（表单内容将会清除）',
       'warning',
       {
         confirmButtonText:'确认退出',
@@ -58,28 +56,8 @@ const quit=()=>{
   })
 }
 
-//根据表单还是歌手给表格赋值
-//获取仓库信息
-function getUserData() {
-  if (form.isSinger){
-    const singerData=singerInfoStore()
-    get(`/api/index/getSongDataOne?singer_id=${singerData.singer_id}&song_id=${form.song_id}`,(data)=>{
-      form.title=data.songDataOne.title
-      form.songType=data.songDataOne.songType
-      form.release_date=data.songDataOne.release_date
-    })
-  }else {
-    const playlistData=playlistInfoStore()
-    get(`/api/index/getSongDataOne_P?playlist_id=${playlistData.playlist_id}&song_id=${form.song_id}`,(data)=>{
-      form.title=data.songDataOne.title
-      form.songType=data.songDataOne.songType
-      form.release_date=data.songDataOne.release_date
-    })
-  }
-}
-getUserData()
 
-function changeData() {
+function addData() {
   let DateString;
 
   if(form.release_date instanceof Date) {
@@ -100,61 +78,21 @@ function changeData() {
       // 如果解析失败，可能需要处理错误或使用默认值
       console.error('无法解析日期：', form.release_date);
       // 这里可以根据你的需求决定如何处理，比如使用默认日期或通知用户
-      return;
+      form.release_date=""
     }
   }
-  get(`/api/index/changeSongs?song_id=${form.song_id}&title=${form.title}&songType=${form.songType}&release_date=${DateString}`, (data) => {
-    ElMessage.success("信息修改成功")
+  const singerData=singerInfoStore()
+  post(`http://localhost:8081/api/index/addSong`, {
+    title: form.title,
+    songType: form.songType,
+    release_date: DateString,
+    singer_id: singerData.singer_id
+  },()=>{
+    ElMessage.success("添加成功")
   })
-  uploadFile_Button()
 }
 
-//文件上传
 
-const uploadMp3Ref=ref(null)
-const uploadLrcRef=ref(null)
-//获取文件（mp3）
-const getMp3FileUpload = (file) => {
-  form.mp3File = file; // 将文件对象保存到状态中
-  console.log(form.mp3File );
-};
-
-//替换文件（mp3）
-const handleExceed_Mp3 = (files) => {
-  uploadMp3Ref.value.clearFiles()
-  const file = files[0]
-  file.uid = genFileId()
-  uploadMp3Ref.value.handleStart(file)
-}
-//获取文件（lrc）
-const getLrcFileUpload = (file) => {
-  form.lrcFile = file; // 将文件对象保存到状态中
-  // console.log(form.lrcFile );
-};
-
-//替换文件（lrc）
-const handleExceed_Lrc = (files) => {
-  uploadLrcRef.value.clearFiles()
-  const file = files[0]
-  file.uid = genFileId()
-  uploadLrcRef.value.handleStart(file)
-}
-//上传文件(mp3)
-const uploadFile_Button = () => {
-  // 构建请求数据
-  const formData_mp3 = new FormData();
-  formData_mp3.append('file', form.mp3File.raw);
-  formData_mp3.append('song_id', form.song_id); // 这里需要传递正确的 song_id
-  uploadFile('/api/index/upSongMp3', formData_mp3, () => {
-    ElMessage.success("上传MP3文件成功")
-  });
-  const formData_lrc = new FormData();
-  formData_lrc.append('file', form.lrcFile.raw);
-  formData_lrc.append('song_id', form.song_id); // 这里需要传递正确的 song_id
-  uploadFile('/api/index/upSongLrc', formData_lrc, () => {
-    ElMessage.success("上传lrc文件成功")
-  });
-};
 </script>
 
 <template>
@@ -202,37 +140,6 @@ const uploadFile_Button = () => {
               </el-form-item>
             </el-col>
           </el-row>
-          <div>
-            <el-upload
-                :auto-upload="false"
-                :disabled="form.isDisabled"
-                :limit="1"
-                drag
-                ref="uploadMp3Ref"
-                :on-change="getMp3FileUpload"
-                :on-exceed="handleExceed_Mp3"
-            >
-              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-              <div class="el-upload__text">
-                将歌曲mp3文件放到这里或 <em>点击上传</em>
-              </div>
-            </el-upload>
-            <el-upload
-                :auto-upload="false"
-                :disabled="form.isDisabled"
-                :limit="1"
-                drag
-                ref="uploadLrcRef"
-                :on-change="getLrcFileUpload"
-                :on-exceed="handleExceed_Lrc"
-            >
-              <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-              <div class="el-upload__text">
-                将歌词lrc文件放到这里或 <em>点击上传</em>
-              </div>
-            </el-upload>
-<!--            <el-button @click="uploadFile_Button">提交</el-button>-->
-          </div>
           <div style="padding: 1vh 0 0 0;">
 
           </div>
@@ -242,10 +149,10 @@ const uploadFile_Button = () => {
 
 
           <el-button style="margin-right: 4vh;" v-if="form.isDisabled" @click="changeDisable">
-            编辑信息
+            添加信息
           </el-button>
           <el-button style="margin-right: 4vh;" v-if="!form.isDisabled" @click="affirm">
-            确认编辑
+            确认添加
           </el-button>
           <el-button v-if="!form.isDisabled" @click="quit">
             退出
