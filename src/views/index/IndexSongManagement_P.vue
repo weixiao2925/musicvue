@@ -104,7 +104,7 @@ function handSelectChange(rows) {
 const deleteSongs=()=>{
   // 将数组转换成以逗号分隔的字符串
   const songIds = payload.value.join(',');
-  get(`/api/index/deleteSongs?songIds=${songIds}`, (data)=>{
+  get(`/api/index/deleteSongs_P?songIds=${songIds}`, (data)=>{
     ElMessage.success("删除成功");
     getData(currentPage.value)
   })
@@ -132,7 +132,7 @@ const payloadOne=ref([])
 const deleteSong=()=>{
   // 将数组转换成以逗号分隔的字符串
   const songIds = payloadOne.value.join(',');
-  get(`/api/index/deleteSongs?songIds=${songIds}`, (data)=>{
+  get(`/api/index/deleteSongs_P?songIds=${songIds}`, (data)=>{
     ElMessage.success("删除成功");
     getData(currentPage.value)
   })
