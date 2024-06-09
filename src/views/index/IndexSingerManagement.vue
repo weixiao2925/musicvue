@@ -220,7 +220,7 @@ function editingSinger(row) {
         <el-table-column label="xx管理" property="userSex" align="center" min-width="60">
           <template #default="row">
             <el-button @click="putSinger(row)">
-              xx管理
+              歌曲管理
             </el-button>
           </template>
         </el-table-column>

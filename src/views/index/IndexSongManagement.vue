@@ -1,13 +1,13 @@
 <script setup>
 
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import testImage from '@/assets/test.jpg'
 import {Search} from "@element-plus/icons-vue";
 import {singerInfoStore} from "@/store/singer.js";
 import {useRouter} from "vue-router";
-import {get} from "@/net/index.js";
+import {get, uploadFile} from "@/net/index.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 
 import IndexSongChange from "@/views/index/indexSongManagement/IndexSongChange.vue";
 import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongAdd.vue";
@@ -32,6 +32,16 @@ let tableData = ref([]);
 //当前页面
 const currentPage = ref(1);
 
+//数据对象
+const form=reactive({
+  isDisabled:true,
+
+  title:"",
+  songType:"",
+  release_date:"",
+  mp3File: null, // 用于存储文件对象
+  lrcFile: null,
+})
 
 //获取当前分页
 function handlePageChange(page) {
@@ -144,6 +154,65 @@ function handDeleteSong(row){
     ElMessage.success("已取消");
   })
 }
+
+//----文件上传
+const uploadMp3Ref=ref(null)
+const uploadLrcRef=ref(null)
+//获取文件（mp3）
+const getMp3FileUpload = (file) => {
+  form.mp3File = file; // 将文件对象保存到状态中
+  // console.log(form.mp3File );
+};
+
+//替换文件（mp3）
+const handleExceed_Mp3 = (files) => {
+  uploadMp3Ref.value.clearFiles()
+  const file = files[0]
+  file.uid = genFileId()
+  uploadMp3Ref.value.handleStart(file)
+}
+//获取文件（lrc）
+const getLrcFileUpload = (file) => {
+  form.lrcFile = file; // 将文件对象保存到状态中
+  // console.log(form.lrcFile );
+};
+
+//替换文件（lrc）
+const handleExceed_Lrc = (files) => {
+  // console.log(  uploadLrcRef.value.clearFiles())
+  uploadLrcRef.value.clearFiles()
+  const file = files[0]
+  file.uid = genFileId()
+  uploadLrcRef.value.handleStart(file)
+}
+//上传文件(mp3)
+const uploadFile_Button = (row) => {
+  // console.log(row.row)
+  // 构建请求数据
+  // console.log(row.row.song_id)
+  const formData_mp3 = new FormData();
+  if (form.mp3File !=null){
+    formData_mp3.append('file', form.mp3File.raw);
+    formData_mp3.append('song_id', row.row.song_id); // 这里需要传递正确的 song_id
+    uploadFile('/api/index/upSongMp3', formData_mp3, () => {
+      form.mp3File=null
+      // uploadMp3Ref.value= null
+      ElMessage.success("上传MP3文件成功")
+    });
+  }
+  if (form.lrcFile != null){
+    const formData_lrc = new FormData();
+    formData_lrc.append('file', form.lrcFile.raw);
+    formData_lrc.append('song_id', row.row.song_id); // 这里需要传递正确的 song_id
+    uploadFile('/api/index/upSongLrc', formData_lrc, () => {
+      form.lrcFile=null
+      // uploadLrcRef.value=null
+      ElMessage.success("上传lrc文件成功")
+    });
+  }
+  getData()
+};
+
 </script>
 
 <template>
@@ -214,15 +283,38 @@ function handDeleteSong(row){
       </el-table-column>
       <el-table-column label="歌曲名" property="title" align="center" min-width="40"/>
       <el-table-column label="类型" property="songType" align="center" min-width="30"/>
-      <el-table-column label="歌词" property="xx" align="center"  min-width="160"/>
-      <el-table-column label="音频管理" property="userSex" align="center" min-width="35">
+      <el-table-column label="歌词" property="xx" align="center"  min-width="140"/>
+      <el-table-column label="音频管理" property="userSex" align="center" min-width="55">
         <template #default="row">
           <el-space direction="vertical">
             <div>
-              <el-button size="small">更新音频</el-button>
+              <el-upload
+                  :auto-upload="false"
+                  :limit="1"
+                  ref="uploadMp3Ref"
+                  :on-change="getMp3FileUpload"
+                  :on-exceed="handleExceed_Mp3"
+              >
+                <template #trigger>
+                  <el-button size="small" >更新音频</el-button>
+                </template>
+              </el-upload>
             </div>
             <div>
-              <el-button size="small">更新歌词</el-button>
+              <el-upload
+                  :auto-upload="false"
+                  :limit="1"
+                  ref="uploadLrcRef"
+                  :on-change="getLrcFileUpload"
+                  :on-exceed="handleExceed_Lrc"
+              >
+                <template #trigger>
+                  <el-button size="small" >更新歌词</el-button>
+                </template>
+              </el-upload>
+            </div>
+            <div>
+              <el-button type="warning" size="small" @click="uploadFile_Button(row)">确定更新</el-button>
             </div>
           </el-space>
         </template>

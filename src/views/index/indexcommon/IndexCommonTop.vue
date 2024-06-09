@@ -26,7 +26,7 @@ const userStore=userInfoStore()
 // console.log(userStore.name)
 //用户信息赋值
 const tableData=reactive({
-  test:userStore.name,
+  name:userStore.name,
 })
 
 </script>
@@ -46,7 +46,7 @@ const tableData=reactive({
             </div>
             <transition name="el-fade-in">
               <div style="font-size: 1rem;float: right;padding: 10px ;">
-                {{tableData.changeInfoDialog}}
+                {{tableData.name}}
               </div>
             </transition>
           </div>
