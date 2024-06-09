@@ -57,6 +57,7 @@ async function getData(page = currentPage.value) {
 
 getData(1)
 
+//----跳转到歌曲管理
 function putSinger(table) {
   // ;console.log(table.row.singer_id)
   //获取singer仓库

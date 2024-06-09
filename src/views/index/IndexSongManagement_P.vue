@@ -11,6 +11,7 @@ import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 
 import IndexSongChange from "@/views/index/indexSongManagement/IndexSongChange.vue";
 import IndexSongAdd from "@/views/index/indexSongManagement/IndexSongAdd.vue";
+import {playlistInfoStore} from "@/store/playlist.js";
 
 
 
@@ -50,11 +51,11 @@ function handlePageChange(page) {
   getData(page)
 }
 //获取仓库信息
-const singerData=singerInfoStore()
+const playlistData=playlistInfoStore()
 
 // 将 getData 方法改为异步函数,获取数据
 async function getData(page = currentPage.value) {
-  get(`http://localhost:8081/api/index/getSongTableList?singer_id=${singerData.singer_id}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
+  get(`http://localhost:8081/api/index/getSongTableList_P?playlist_id=${playlistData.playlist_id}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.songDataList;
     pageCount.value=data.count;
   })
@@ -69,7 +70,7 @@ function getSearch(page) {
   if (typeof page !== 'number') {
     page = currentPage.value;
   }
-  get(`http://localhost:8081/api/index/searchSongTableList?singer_id=${singerData.singer_id}&&searchText=${searchText.value}&&page=${page}&pageSize=${pageSize.value}`,(data)=>{
+  get(`http://localhost:8081/api/index/searchSongTableList_P?playlist_id=${playlistData.playlist_id}&&searchText=${searchText.value}&&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.songDataList;
     pageCount.value=data.count;
   })
@@ -262,7 +263,7 @@ const uploadFile_Button = (row) => {
       destroy-on-close
       @closed="getData"
   >
-    <IndexSongAdd :is-singer="true"/>
+    <IndexSongAdd :is-singer="false"/>
   </el-dialog>
   <div>
     <el-table

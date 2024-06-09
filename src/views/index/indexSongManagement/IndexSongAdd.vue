@@ -6,10 +6,9 @@ import {UploadFilled} from "@element-plus/icons-vue";
 import {singerInfoStore} from "@/store/singer.js";
 import {playlistInfoStore} from "@/store/playlist.js";
 
-// const props=defineProps({
-//   song_id:String,
-//   isSinger:Boolean
-// })
+const props=defineProps({
+  isSinger:Boolean
+})
 const form=reactive({
   isDisabled:true,
 
@@ -81,15 +80,26 @@ function addData() {
       form.release_date=""
     }
   }
-  const singerData=singerInfoStore()
-  post(`http://localhost:8081/api/index/addSong`, {
-    title: form.title,
-    songType: form.songType,
-    release_date: DateString,
-    singer_id: singerData.singer_id
-  },()=>{
-    ElMessage.success("添加成功")
-  })
+  if (props.isSinger) {
+    const singerData=singerInfoStore()
+    post(`http://localhost:8081/api/index/addSong`, {
+      title: form.title,
+      songType: form.songType,
+      release_date: DateString,
+      singer_id: singerData.singer_id
+    },()=>{
+      ElMessage.success("添加成功")
+    })
+  }else {
+    const playlistData=playlistInfoStore()
+    post(`http://localhost:8081/api/index/addSong_P`, {
+      title: form.title,
+      playlist_id: playlistData.playlist_id
+    },()=>{
+      ElMessage.success("添加成功")
+    })
+  }
+
 }
 
 
@@ -132,12 +142,14 @@ function addData() {
 
           <el-row :gutter="20">
             <el-col :span="12">
-              <el-form-item label="发行时间">
-                <el-date-picker
-                    v-model="form.release_date"
-                    :disabled="form.isDisabled"
-                />
-              </el-form-item>
+              <div v-if="props.isSinger">
+                <el-form-item label="发行时间">
+                  <el-date-picker
+                      v-model="form.release_date"
+                      :disabled="form.isDisabled"
+                  />
+                </el-form-item>
+              </div>
             </el-col>
           </el-row>
           <div style="padding: 1vh 0 0 0;">

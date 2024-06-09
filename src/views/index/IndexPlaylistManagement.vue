@@ -6,6 +6,8 @@ import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
 import {get} from "@/net/index.js";
 import {ElMessage, ElMessageBox} from "element-plus";
+import {singerInfoStore} from "@/store/singer.js";
+import {playlistInfoStore} from "@/store/playlist.js";
 
 
 
@@ -58,6 +60,16 @@ async function getData(page = currentPage.value) {
 }
 
 getData(1)
+
+//----跳转到歌曲管理
+function putSinger(table) {
+  // ;console.log(table.row.singer_id)
+  //获取singer仓库
+  const playlistStore=playlistInfoStore()
+  playlistStore.playlist_id=table.row.playlist_id;
+  playlistStore.playlist_name=table.row.playlist_name;
+  goTo('/index-song_P')
+}
 
 //搜索功能
 const searchText=ref("")
@@ -183,8 +195,8 @@ function handDeleteSong(row){
       <el-table-column label="简介" property="intro" align="center"  min-width="160"/>
       <el-table-column label="xx管理" property="userSex" align="center" min-width="60">
         <template #default="row">
-          <el-button>
-            xx管理
+          <el-button @click="putSinger(row)">
+            歌曲管理
           </el-button>
         </template>
       </el-table-column>
