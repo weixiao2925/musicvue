@@ -4,7 +4,7 @@ import {ref} from "vue";
 import testImage from '@/assets/test.jpg'
 import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
-import {get} from "@/net/index.js";
+import {fetchAndDisplayFile, get} from "@/net/index.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {singerInfoStore} from "@/store/singer.js";
 import {playlistInfoStore} from "@/store/playlist.js";
@@ -47,6 +47,14 @@ async function getData(page = currentPage.value) {
   get(`http://localhost:8081/api/index/getPlayListTableList?page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.playListDataList;
     pageCount.value=data.count;
+    // console.log(tableData.value)
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getPlaylistAvatar?playlist_id=${tableData.value[i].playlist_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].playList_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
 }
 
