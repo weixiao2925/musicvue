@@ -42,17 +42,6 @@ async function getData(page = currentPage.value) {
     tableData.value = data.singerDataList;
     pageCount.value=data.count;
   })
-  // try {
-  //   // 等待 axios 请求完成
-  //   const response = await get(`http://localhost:8081/data2?page=${page}&pageSize=${pageSize.value}`);
-  //   // 赋值操作
-  //   tableData.value=response.data.userDataList;
-  //   pageCount.value=response.data.count
-  //   // console.log(tableData)
-  //   // console.log(pageCount.value)
-  // } catch (error) {
-  //   console.error(error);
-  // }
 }
 
 
@@ -156,14 +145,8 @@ function handDeleteSinger(row){
 const dialogFormVisible_change = ref(false)
 const singer_id=ref("")
 function editingSinger(row) {
-  singer_id.value = row.row.singer_id;
+  singer_id.value=row.row.singer_id
   dialogFormVisible_change.value=!dialogFormVisible_change.value;
-  // console.log(row.row.singer_name)
-  // const singerStore=singerInfoStore()
-  // singerStore.singer_id=row.row.singer_id;
-  // singerStore.singer_name=row.row.singer_name;
-  // goTo('/index-singerEditor')
-
 }
 </script>
 
@@ -198,6 +181,7 @@ function editingSinger(row) {
              destroy-on-close
              center
              draggable
+             @closed="getData"
   >
     <IndexSingerAdd :currentPage="currentPage" :getData="getData"/>
   </el-dialog>
@@ -205,6 +189,7 @@ function editingSinger(row) {
              destroy-on-close
              center
              draggable
+             @closed="getData"
   >
     <IndexSingerEditingPage :singer_id="singer_id.valueOf()"/>
   </el-dialog>

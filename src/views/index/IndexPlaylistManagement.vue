@@ -8,6 +8,8 @@ import {get} from "@/net/index.js";
 import {ElMessage, ElMessageBox} from "element-plus";
 import {singerInfoStore} from "@/store/singer.js";
 import {playlistInfoStore} from "@/store/playlist.js";
+import IndexSingerEditingPage from "@/views/index/indexSingerManagement/IndexSingerEditingPage.vue";
+import IndexPlaylistEditingPage from "@/views/index/indexPlaylistManagement/IndexPlaylistEditingPage.vue";
 
 
 
@@ -46,17 +48,6 @@ async function getData(page = currentPage.value) {
     tableData.value = data.playListDataList;
     pageCount.value=data.count;
   })
-  // try {
-  //   // 等待 axios 请求完成
-  //   const response = await get(`http://localhost:8081/data2?page=${page}&pageSize=${pageSize.value}`);
-  //   // 赋值操作
-  //   tableData.value=response.data.userDataList;
-  //   pageCount.value=response.data.count
-  //   // console.log(tableData)
-  //   // console.log(pageCount.value)
-  // } catch (error) {
-  //   console.error(error);
-  // }
 }
 
 getData(1)
@@ -149,6 +140,15 @@ function handDeleteSong(row){
     ElMessage.success("已取消");
   })
 }
+
+//----跳转编辑页
+const dialogFormVisible_change = ref(false)
+const playlist_id=ref("")
+function editingSinger(row) {
+  playlist_id.value = row.row.playlist_id;
+  dialogFormVisible_change.value=!dialogFormVisible_change.value;
+}
+
 </script>
 
 <template>
@@ -171,6 +171,16 @@ function handDeleteSong(row){
   <div>
     <el-button type="danger" @click="handDeleteSongs">批量删除</el-button>
   </div>
+
+  <el-dialog v-model="dialogFormVisible_change"
+             destroy-on-close
+             center
+             draggable
+             @closed="getData"
+  >
+    <IndexPlaylistEditingPage :playlist_id="playlist_id.valueOf()"/>
+  </el-dialog>
+
 
   <div>
     <el-table
@@ -202,7 +212,7 @@ function handDeleteSong(row){
       </el-table-column>
       <el-table-column label="操作" property="name7" align="center">
         <template #default="row">
-          <el-button>编辑</el-button>
+          <el-button  @click="editingSinger(row)">编辑</el-button>
           <el-button type="danger" @click="handDeleteSong(row)">删除</el-button>
         </template>
       </el-table-column>
