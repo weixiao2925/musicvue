@@ -62,11 +62,11 @@ const routes=[
                 name:"index-userEditor",
                 component:()=>import("@/views/index/indexUserManagement/UserEditingPage.vue")
             },
-            {
-                path:"/index-singerEditor",
-                name:"index-singerEditor",
-                component:()=>import("@/views/index/indexSingerManagement/IndexEditingPage.vue")
-            }
+            // {
+            //     path:"/index-singerEditor",
+            //     name:"index-singerEditor",
+            //     component:()=>import("@/views/index/indexSingerManagement/IndexSingerEditingPage.vue")
+            // }
 
         ]
     }

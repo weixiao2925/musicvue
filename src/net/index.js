@@ -61,7 +61,9 @@ function internalGet(url, header, success, failure, error) {
         }else {
             failure(data.message,data.code,url);
         }
-    }).catch(err=>error(err))
+    }).catch(err=> {
+        console.error(err.message);
+    })
 }
 //默认失败(1)
 const defaultFailure=(message,code,url)=>{

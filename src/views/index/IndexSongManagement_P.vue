@@ -81,7 +81,7 @@ const dialogFormSongInfoVisible = ref(false)//默认关闭状态
 const song_id=ref("")//song_id
 function changeInfoDialog(row) {
   song_id.value=row.row.song_id;
-  // console.log(song_id.value)
+  console.log(song_id.value)
   dialogFormSongInfoVisible.value = !dialogFormSongInfoVisible.value
   // console.log(dialogFormVisible.value)
 }
@@ -253,7 +253,7 @@ const uploadFile_Button = (row) => {
       destroy-on-close
       @closed="getData"
   >
-    <IndexSongChange :song_id="song_id.valueOf()" :is-singer="true"/>
+    <IndexSongChange :song_id="song_id.valueOf()" :is-singer="false"/>
   </el-dialog>
   <el-dialog
       v-model="dialogFormSongAddVisible"

@@ -7,6 +7,7 @@ import {get} from "@/net/index.js";
 import {singerInfoStore} from "@/store/singer.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
+import IndexSingerEditingPage from "@/views/index/indexSingerManagement/IndexSingerEditingPage.vue";
 
 const router=useRouter()
 function goTo(route) {
@@ -80,7 +81,7 @@ function getSearch(page) {
 }
 //添加数据
 const dialogFormVisible = ref(false)
-function test() {
+function addInfo() {
   dialogFormVisible.value = !dialogFormVisible.value
   // console.log(dialogFormVisible.value)
 }
@@ -152,12 +153,17 @@ function handDeleteSinger(row){
 }
 
 //----跳转编辑页
+const dialogFormVisible_change = ref(false)
+const singer_id=ref("")
 function editingSinger(row) {
+  singer_id.value = row.row.singer_id;
+  dialogFormVisible_change.value=!dialogFormVisible_change.value;
   // console.log(row.row.singer_name)
-  const singerStore=singerInfoStore()
-  singerStore.singer_id=row.row.singer_id;
-  singerStore.singer_name=row.row.singer_name;
-  goTo('/index-singerEditor')
+  // const singerStore=singerInfoStore()
+  // singerStore.singer_id=row.row.singer_id;
+  // singerStore.singer_name=row.row.singer_name;
+  // goTo('/index-singerEditor')
+
 }
 </script>
 
@@ -181,7 +187,7 @@ function editingSinger(row) {
   <el-row>
     <el-col :span="2">
       <div>
-        <el-button type="success" @click="test">添加</el-button>
+        <el-button type="success" @click="addInfo">添加</el-button>
       </div>
     </el-col>
     <el-col :span="2">
@@ -195,7 +201,13 @@ function editingSinger(row) {
   >
     <IndexSingerAdd :currentPage="currentPage" :getData="getData"/>
   </el-dialog>
-
+  <el-dialog v-model="dialogFormVisible_change"
+             destroy-on-close
+             center
+             draggable
+  >
+    <IndexSingerEditingPage :singer_id="singer_id.valueOf()"/>
+  </el-dialog>
     <div>
       <el-table
           ref="multipleTableRef"
