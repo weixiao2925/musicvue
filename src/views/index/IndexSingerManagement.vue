@@ -1,12 +1,12 @@
 <script setup>
 
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
-import {fetchAndDisplayFile, get} from "@/net/index.js";
+import {fetchAndDisplayFile, get, uploadFile} from "@/net/index.js";
 import {singerInfoStore} from "@/store/singer.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
-import {ElMessage, ElMessageBox} from "element-plus";
+import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 import IndexSingerEditingPage from "@/views/index/indexSingerManagement/IndexSingerEditingPage.vue";
 
 const router=useRouter()
@@ -155,6 +155,42 @@ function editingSinger(row) {
   singer_id.value=row.row.singer_id
   dialogFormVisible_change.value=!dialogFormVisible_change.value;
 }
+//----文件上传
+const form=reactive({
+  aFile:null
+})
+const uploadRef=ref(null)
+//获取文件（mp3）
+const getFileUpload = (file) => {
+  form.aFile = file; // 将文件对象保存到状态中
+  // console.log(form.mp3File );
+};
+
+//替换文件（）
+const handleExceed = (files) => {
+  uploadRef.value.clearFiles()
+  const file = files[0]
+  file.uid = genFileId()
+  uploadRef.value.handleStart(file)
+}
+//上传文件()
+const uploadFile_Button = (row) => {
+  // console.log(row.row)
+  // 构建请求数据
+  // console.log(row.row.song_id)
+  uploadRef.value.clearFiles()
+  const formData = new FormData();
+  if (form.aFile !=null){
+    formData.append('file', form.aFile.raw);
+    formData.append('singer_id', row.row.singer_id); // 这里需要传递正确的 song_id
+    uploadFile('/api/index/upSingerAvatar', formData, () => {
+      form.aFile=null
+      // uploadRef.value= null
+      ElMessage.success("上传图片文件成功")
+    });
+  }
+  getData()
+};
 </script>
 
 <template>
@@ -214,7 +250,18 @@ function editingSinger(row) {
         <el-table-column label="歌手图片"  align="center" min-width="50">
           <template #default="row">
             <el-avatar shape="square" :size="80" :src="row.row.singer_path" />
-            <el-button size="small">更新图片</el-button>
+            <el-upload
+                :auto-upload="false"
+                :limit="1"
+                ref="uploadRef"
+                :on-change="getFileUpload"
+                :on-exceed="handleExceed"
+            >
+              <template #trigger>
+                <el-button size="small">更新图片</el-button>
+              </template>
+            </el-upload>
+            <el-button size="small" type="warning" @click="uploadFile_Button(row)">确认更新</el-button>
           </template>
         </el-table-column>
         <el-table-column label="歌手名" property="singer_name" align="center" min-width="40"/>
