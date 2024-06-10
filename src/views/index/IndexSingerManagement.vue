@@ -3,7 +3,7 @@
 import {ref} from "vue";
 import {Search} from "@element-plus/icons-vue";
 import {useRouter} from "vue-router";
-import {get} from "@/net/index.js";
+import {fetchAndDisplayFile, get} from "@/net/index.js";
 import {singerInfoStore} from "@/store/singer.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -41,6 +41,13 @@ async function getData(page = currentPage.value) {
   get(`http://localhost:8081/api/index/getSingerTableList?page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.singerDataList;
     pageCount.value=data.count;
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getSingerAvatar?singer_id=${tableData.value[i].singer_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].singer_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
 }
 
@@ -206,7 +213,7 @@ function editingSinger(row) {
         <el-table-column  label="歌手id" property="singer_id"  align="center" min-width="20"/>
         <el-table-column label="歌手图片"  align="center" min-width="50">
           <template #default="row">
-            <el-avatar shape="square" :size="80" :src="row.row.avatarUrl" />
+            <el-avatar shape="square" :size="80" :src="row.row.singer_path" />
             <el-button size="small">更新图片</el-button>
           </template>
         </el-table-column>
