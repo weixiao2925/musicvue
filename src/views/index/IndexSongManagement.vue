@@ -164,7 +164,7 @@ function handDeleteSong(row){
 }
 
 //----文件上传
-const uploadMp3Ref=ref(null)
+const uploadRef=ref(null)
 const uploadLrcRef=ref(null)
 //获取文件（mp3）
 const getMp3FileUpload = (file) => {
@@ -204,7 +204,7 @@ const uploadFile_Button = (row) => {
     formData_mp3.append('song_id', row.row.song_id); // 这里需要传递正确的 song_id
     uploadFile('/api/index/upSongMp3', formData_mp3, () => {
       form.mp3File=null
-      // uploadMp3Ref.value= null
+      // uploadRef.value= null
       ElMessage.success("上传MP3文件成功")
     });
   }
@@ -286,7 +286,17 @@ const uploadFile_Button = (row) => {
       <el-table-column label="歌曲图片"  align="center" min-width="40">
         <template #default="row">
           <el-avatar shape="square" :size="80" :src="row.row.song_path" />
-          <el-button size="small">更新图片</el-button>
+          <el-upload
+              :auto-upload="false"
+              :limit="1"
+              ref="uploadMp3Ref"
+              :on-change="getMp3FileUpload"
+              :on-exceed="handleExceed_Mp3"
+          >
+            <template #trigger>
+              <el-button size="small" >更新图片</el-button>
+            </template>
+          </el-upload>
         </template>
       </el-table-column>
       <el-table-column label="歌曲名" property="title" align="center" min-width="40"/>

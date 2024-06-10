@@ -13,7 +13,6 @@ const form=reactive({
   isDisabled:true,
 
   title:"",
-  songType:"",
   release_date:"",
   mp3File: null, // 用于存储文件对象
   lrcFile: null,
@@ -131,11 +130,6 @@ function addData() {
             <el-col :span="12">
               <el-form-item label="歌名*" >
                 <el-input v-model="form.title" :disabled="form.isDisabled" class="input"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="类型">
-                <el-input v-model="form.songType" class="input" :disabled="form.isDisabled"></el-input>
               </el-form-item>
             </el-col>
           </el-row>

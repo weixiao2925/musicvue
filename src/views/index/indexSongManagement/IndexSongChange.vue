@@ -111,7 +111,7 @@ function changeData() {
 
 //文件上传
 
-const uploadMp3Ref=ref(null)
+const uploadRef=ref(null)
 const uploadLrcRef=ref(null)
 //获取文件（mp3）
 const getMp3FileUpload = (file) => {
