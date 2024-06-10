@@ -58,7 +58,7 @@ async function getData(page = currentPage.value) {
   get(`http://localhost:8081/api/index/getSongTableList_P?playlist_id=${playlistData.playlist_id}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.songDataList;
     pageCount.value=data.count;
-    console.log(tableData.value)
+    // console.log(tableData.value)
     for (let i=0;i<pageCount.value;i++) {
       fetchAndDisplayFile(`/api/index/getSongAvatar?song_id=${tableData.value[i].song_id}`,(data)=>{
         // console.log(data)
