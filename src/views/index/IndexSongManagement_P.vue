@@ -42,6 +42,7 @@ const form=reactive({
   release_date:"",
   mp3File: null, // 用于存储文件对象
   lrcFile: null,
+  aFile:null,
 })
 
 //获取当前分页
@@ -166,7 +167,7 @@ function handDeleteSong(row){
 }
 
 //----文件上传
-const uploadRef=ref(null)
+const uploadMp3Ref=ref(null)
 const uploadLrcRef=ref(null)
 //获取文件（mp3）
 const getMp3FileUpload = (file) => {
@@ -222,7 +223,39 @@ const uploadFile_Button = (row) => {
   }
   getData()
 };
+//----图片文件上传
+const uploadRef=ref(null)
+//获取文件（mp3）
+const getFileUpload = (file) => {
+  form.aFile = file; // 将文件对象保存到状态中
+  // console.log(form.mp3File );
+};
 
+//替换文件（）
+const handleExceed = (files) => {
+  uploadRef.value.clearFiles()
+  const file = files[0]
+  file.uid = genFileId()
+  uploadRef.value.handleStart(file)
+}
+//上传文件()
+const uploadFile_ImgButton = (row) => {
+  // console.log(row.row)
+  // 构建请求数据
+  // console.log(row.row.song_id)
+  uploadRef.value.clearFiles()
+  const formData = new FormData();
+  if (form.aFile !=null){
+    formData.append('file', form.aFile.raw);
+    formData.append('song_id', row.row.song_id); // 这里需要传递正确的 song_id
+    uploadFile('/api/index/upSongAvatar', formData, () => {
+      form.aFile=null
+      // uploadRef.value= null
+      ElMessage.success("上传图片文件成功")
+    });
+  }
+  getData()
+};
 </script>
 
 <template>
@@ -288,7 +321,18 @@ const uploadFile_Button = (row) => {
       <el-table-column label="歌曲图片"  align="center" min-width="40">
         <template #default="row">
           <el-avatar shape="square" :size="80" :src="row.row.song_path" />
-          <el-button size="small">更新图片</el-button>
+          <el-upload
+              :auto-upload="false"
+              :limit="1"
+              ref="uploadRef"
+              :on-change="getFileUpload"
+              :on-exceed="handleExceed"
+          >
+            <template #trigger>
+              <el-button size="small">更新图片</el-button>
+            </template>
+          </el-upload>
+          <el-button size="small" type="warning" @click="uploadFile_ImgButton(row)">确认更新</el-button>
         </template>
       </el-table-column>
       <el-table-column label="歌曲名" property="title" align="center" min-width="40"/>
