@@ -94,7 +94,7 @@ onMounted(async () => {
     yAxis: {},
     series: [
       {
-        name: '销量',
+        name: '数量',
         type: 'bar',
         data: seriesData_songType
       }
@@ -137,7 +137,7 @@ onMounted(async () => {
     yAxis: {},
     series: [
       {
-        name: '销量',
+        name: '数量',
         type: 'bar',
         data:seriesData_singerNation
       },
@@ -161,13 +161,13 @@ onMounted(async () => {
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <h4 style="margin: 0.8rem 0">比例1</h4>
+        <h4 style="margin: 0.8rem 0">用户性别比例</h4>
         <div class="grid-content ep-bg-purple">
           <div id="userSex" style="min-width: 300px; min-height: 20rem"></div>
         </div>
       </el-col>
       <el-col :span="12">
-        <h4 style="margin: 0.8rem 0">比例1</h4>
+        <h4 style="margin: 0.8rem 0">歌曲类别分布</h4>
         <div class="grid-content ep-bg-purple">
           <div id="songType" style="min-width: 300px; min-height: 20rem"></div>
         </div>
@@ -177,13 +177,13 @@ onMounted(async () => {
   <div>
     <el-row :gutter="20">
       <el-col :span="12">
-        <h4 style="margin: 0.8rem 0">比例1</h4>
+        <h4 style="margin: 0.8rem 0">歌手性别比例</h4>
         <div class="grid-content ep-bg-purple">
           <div id="singerSex" style="min-width: 300px; min-height: 20rem"></div>
         </div>
       </el-col>
       <el-col :span="12">
-        <h4 style="margin: 0.8rem 0">比例1</h4>
+        <h4 style="margin: 0.8rem 0">歌手国籍分布</h4>
         <div class="grid-content ep-bg-purple">
           <div id="singerNation" style="min-width: 300px; min-height: 20rem"></div>
         </div>

@@ -203,19 +203,19 @@ function editingSinger(row) {
           flexible
       >
         <el-table-column  type="selection"/>
-        <el-table-column  label="用户id" property="singer_id"  align="center" min-width="20"/>
-        <el-table-column label="用户图片"  align="center" min-width="50">
+        <el-table-column  label="歌手id" property="singer_id"  align="center" min-width="20"/>
+        <el-table-column label="歌手图片"  align="center" min-width="50">
           <template #default="row">
             <el-avatar shape="square" :size="80" :src="row.row.avatarUrl" />
             <el-button size="small">更新图片</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="用户名" property="singer_name" align="center" min-width="40"/>
+        <el-table-column label="歌手名" property="singer_name" align="center" min-width="40"/>
         <el-table-column label="性别" property="sex" align="center" min-width="20"/>
         <el-table-column label="生日" property="birth_date" align="center" min-width="60"/>
         <el-table-column label="地区" property="nationality" align="center" min-width="60"/>
         <el-table-column label="简介" property="intro" align="center" show-overflow-tooltip min-width="80"/>
-        <el-table-column label="xx管理" property="userSex" align="center" min-width="60">
+        <el-table-column label="歌曲管理" property="userSex" align="center" min-width="60">
           <template #default="row">
             <el-button @click="putSinger(row)">
               歌曲管理

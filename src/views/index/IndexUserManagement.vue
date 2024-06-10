@@ -195,8 +195,8 @@ function handDeleteUser(row){
       <el-table-column label="性别" property="sex" align="center" min-width="20"/>
       <el-table-column label="电子邮箱" property="email" align="center" min-width="60"/>
       <el-table-column label="生日" property="birth_date" align="center" min-width="60"/>
-      <el-table-column label="签名" property="signature" align="center" show-overflow-tooltip min-width="80"/>
-      <el-table-column label="地区" property="region" align="center" min-width="60"/>
+      <el-table-column label="签名" property="signature" align="center" show-overflow-tooltip min-width="60"/>
+      <el-table-column label="地区" property="region" align="center" min-width="40"/>
       <el-table-column label="操作" property="name7" align="center" min-width="60">
         <template #default="row">
           <el-button @click="editing(row)">编辑</el-button>

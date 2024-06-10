@@ -33,7 +33,7 @@ const toggleCollapse = () => {
   <div >
     <div>
       <div id="menu_left" style="float:left;height: 100%;">
-        <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">xxx管理系统</div>
+        <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">音乐管理系统</div>
         <el-menu
             :default-active="indexRouter.index_route"
             :collapse="isCollapse"
@@ -53,11 +53,11 @@ const toggleCollapse = () => {
           </el-menu-item>
           <el-menu-item index="/index-singer">
             <el-icon size="15px"><Notification /></el-icon>
-            <template #title>xx管理</template>
+            <template #title>歌手管理</template>
           </el-menu-item>
           <el-menu-item index="/index-playlist">
             <el-icon size="15px"><Notification /></el-icon>
-            <template #title>xx管理</template>
+            <template #title>歌单管理</template>
           </el-menu-item>
         </el-menu>
       </div>
