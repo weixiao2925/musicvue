@@ -40,7 +40,20 @@ function logout(success,failure=defaultFailure) {
 function uploadFile(url,data,success,failure=defaultFailure) {
     internalPost(url,data,accessHeader_form_data(),success,failure)
 }
-
+// 下载并展示二进制文件（比如图片、音频等）
+function fetchAndDisplayFile(url, success, errorCallback) {
+    axios.get(url, {
+        responseType: 'blob', // 'blob' 或其他二进制文件类型
+        headers: accessHeader() // 使用通用的方法获取认证头部
+    }).then(({data}) => {
+        // console.log(data)
+        const fileURL = window.URL.createObjectURL(new Blob([data]));
+        success(fileURL);
+    }).catch(error => {
+        console.error(error);
+        if (errorCallback) errorCallback(error);
+    });
+}
 
 //----内部工具方法区
 //内部Post（1）
@@ -118,5 +131,6 @@ export {
     logout,
     get,
     post,
-    uploadFile
+    uploadFile,
+    fetchAndDisplayFile
 }

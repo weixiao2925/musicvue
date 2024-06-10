@@ -4,7 +4,7 @@ import {reactive, ref} from "vue";
 import testImage from '@/assets/test.jpg'
 import {Search} from "@element-plus/icons-vue";
 import axios from "axios";
-import {get} from "@/net/index.js";
+import {fetchAndDisplayFile, get} from "@/net/index.js";
 import {useRouter} from "vue-router";
 import {usersInfoStore} from "@/store/users.js";
 import {ElMessage, ElMessageBox} from "element-plus";
@@ -31,20 +31,24 @@ function handlePageChange(page) {
 
 // 将 getData 方法改为异步函数,获取数据
 async function getData(page = currentPage.value) {
-  get(`/api/index/getUserTableList?page=${page}&pageSize=${pageSize.value}`,(data)=>{
+  await get(`/api/index/getUserTableList?page=${page}&pageSize=${pageSize.value}`,(data)=>{
       tableData.value = data.userDataList;
       pageCount.value=data.count
+    // console.log(tableData.value[0].avatarUrl)
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${tableData.value[i].id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].avatarUrl=data;
+        // console.log(tableData.value)
+      })
+    }
+
     },(errorMessage, errorCode) => {
       // 失败回调函数
       console.error(`Error: ${errorMessage}, Code: ${errorCode}`);
     })
-    // // 等待 axios 请求完成
-    // const response = await axios.get(`http://localhost:8080/data2?page=${page}&pageSize=${pageSize.value}`);
-    // // 赋值操作
-    // tableData.value=response.tableData.userDataList;
-    // pageCount.value=response.tableData.count
-    // console.log(tableData)
-    // console.log(pageCount.value)
+
+
 
 }
 getData(1)
@@ -60,14 +64,8 @@ function getSearch(page) {
   }
   get(`/api/index/searchUserTableList?searchText=${searchText.value}&page=${page}&pageSize=${pageSize.value}`,
       (data) => {
-        // console.log("触发了")
-        // console.log(searchText.value)
-        // console.log(page)
-        // console.log(pageSize.value)
-        // 成功的处理逻辑
         tableData.value = data.userDataList;
         pageCount.value = data.count;
-        // console.log(tableData.value)
       },
       (errorMessage, errorCode) => {
         // 错误的处理逻辑
