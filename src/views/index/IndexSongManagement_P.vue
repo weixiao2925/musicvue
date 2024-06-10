@@ -5,7 +5,7 @@ import testImage from '@/assets/test.jpg'
 import {Search} from "@element-plus/icons-vue";
 import {singerInfoStore} from "@/store/singer.js";
 import {useRouter} from "vue-router";
-import {get, uploadFile} from "@/net/index.js";
+import {fetchAndDisplayFile, get, uploadFile} from "@/net/index.js";
 import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 
@@ -58,7 +58,16 @@ async function getData(page = currentPage.value) {
   get(`http://localhost:8081/api/index/getSongTableList_P?playlist_id=${playlistData.playlist_id}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.songDataList;
     pageCount.value=data.count;
+    console.log(tableData.value)
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getSongAvatar?song_id=${tableData.value[i].song_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].song_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
+
 }
 
 getData(1)
@@ -278,7 +287,7 @@ const uploadFile_Button = (row) => {
       <el-table-column  label="歌曲id" property="song_id"  align="center" min-width="20"/>
       <el-table-column label="歌曲图片"  align="center" min-width="40">
         <template #default="row">
-          <el-avatar shape="square" :size="80" :src="row.row.avatarUrl" />
+          <el-avatar shape="square" :size="80" :src="row.row.song_path" />
           <el-button size="small">更新图片</el-button>
         </template>
       </el-table-column>
