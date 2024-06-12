@@ -79,6 +79,13 @@ function getSearch(page) {
   get(`http://localhost:8081/api/index/searchPlayListTableList?searchText=${searchText.value}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.playListDataList;
     pageCount.value=data.count;
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getPlaylistAvatar?playlist_id=${tableData.value[i].playlist_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].playList_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
 }
 

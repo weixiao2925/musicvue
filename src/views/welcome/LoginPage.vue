@@ -81,7 +81,7 @@ function userLogin() {
           </el-form-item>
           <el-form-item>
             <el-checkbox style="" v-model="form.remember_me">
-              记住我
+              自动登录
             </el-checkbox>
           </el-form-item>
           <el-button style=" margin-right: 2.5rem;;width: 20rem" type="danger" plain @click="submit">

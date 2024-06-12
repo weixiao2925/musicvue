@@ -5,8 +5,11 @@ import IndexHomeGraph from "@/views/index/indexhome/IndexHomeGraph.vue";
 </script>
 
 <template>
-  <IndexHomeDataField/>
-  <IndexHomeGraph/>
+  <div style="  background-color: #E5E5E5;">
+    <IndexHomeDataField/>
+    <IndexHomeGraph/>
+  </div>
+
 </template>
 
 <style scoped>

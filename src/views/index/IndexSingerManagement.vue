@@ -73,6 +73,13 @@ function getSearch(page) {
   get(`http://localhost:8081/api/index/searchSingerTableList?searchText=${searchText.value}&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.singerDataList;
     pageCount.value=data.count;
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getSingerAvatar?singer_id=${tableData.value[i].singer_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].singer_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
 }
 //添加数据

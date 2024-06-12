@@ -10,22 +10,7 @@ let userSexList=[];
 let singerSexList=[];
 let singerNationList=[];
 
-// // 将 getData 方法改为异步函数(这里面会有bug的究极原因就是没有正确处理promise)
-// async function getData() {
-//
-//   try {
-//     get(`/api/index/getHomeData`,(data)=>{
-//       userSexList=data.userSexList
-//       songTypeList=data.songTypeList
-//       singerSexList=data.singerSexList
-//       singerNationList=data.singerNationList
-//     })
-//     // 等待 axios 请求完成
-//     const response = await axios.get('/gggggggg');
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
+
 //这里我们把get放到promise里面就能解决promise问题了，这样就能在图形渲染时正确请求到数据
 async function getData() {
   // 将每个请求包裹在一个新的Promise中
@@ -196,7 +181,7 @@ onMounted(async () => {
 .grid-content {
   border-radius: 4px;
   min-height: 20rem;
-  background-color: #11ff00;
-
+  background-color: #fff;
+  border: 1px solid red;
 }
 </style>

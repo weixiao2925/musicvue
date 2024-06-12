@@ -156,9 +156,9 @@ function changeSingerData() {
               <el-col :span="12">
                 <el-text size="large" type="primary">xx介绍</el-text>
               </el-col>
-              <el-col :span="12">
-                <el-text size="large" type="primary">xx头像</el-text>
-              </el-col>
+<!--              <el-col :span="12">-->
+<!--                <el-text size="large" type="primary">xx头像</el-text>-->
+<!--              </el-col>-->
             </el-row>
           </div>
           <el-row :gutter="20">
@@ -176,10 +176,10 @@ function changeSingerData() {
             </el-col>
             <el-col :span="4">
             </el-col>
-            <el-col :span="6">
-              <el-avatar :size="80" style="margin-top: 2vh"/>
-              <el-button style="margin-top: 1vh;width: 12vh">上传头像</el-button>
-            </el-col>
+<!--            <el-col :span="6">-->
+<!--              <el-avatar :size="80" style="margin-top: 2vh"/>-->
+<!--              <el-button style="margin-top: 1vh;width: 12vh">上传头像</el-button>-->
+<!--            </el-col>-->
           </el-row>
           <div style="padding: 1vh 0 0 0;">
 

@@ -83,6 +83,13 @@ function getSearch(page) {
   get(`http://localhost:8081/api/index/searchSongTableList_P?playlist_id=${playlistData.playlist_id}&&searchText=${searchText.value}&&page=${page}&pageSize=${pageSize.value}`,(data)=>{
     tableData.value = data.songDataList;
     pageCount.value=data.count;
+    for (let i=0;i<pageCount.value;i++) {
+      fetchAndDisplayFile(`/api/index/getSongAvatar?song_id=${tableData.value[i].song_id}`,(data)=>{
+        // console.log(data)
+        tableData.value[i].song_path=data;
+        // console.log(tableData.value)
+      })
+    }
   })
 }
 

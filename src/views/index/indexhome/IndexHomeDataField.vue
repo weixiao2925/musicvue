@@ -17,18 +17,6 @@
       tableData.singerSum=data.singerSum;
       tableData.playlistSum=data.playlistSum;
     })
-    // try {
-    //   // 等待 axios 请求完成
-    //   const response = await axios.get('http://localhost:8080/data');
-    //   // 赋值操作
-    //   tableData.userSum=response.data.userSum;
-    //   tableData.singerSum=response.data.singerSum;
-    //   tableData.songSum=response.data.songSum;
-    //   tableData.playlistSum=response.data.playlistSum;
-    //
-    // } catch (error) {
-    //   console.error(error);
-    // }
   }
   getData()
 </script>
@@ -52,7 +40,7 @@
             {{ tableData.songSum }}
           </div>
           <el-text>
-            用户总数
+            歌曲总数
           </el-text>
         </div>
       </el-col>
@@ -62,7 +50,7 @@
             {{ tableData.singerSum }}
           </div>
           <el-text>
-            用户总数
+            歌手总数
           </el-text>
         </div>
       </el-col>
@@ -72,7 +60,7 @@
             {{ tableData.playlistSum }}
           </div>
           <el-text>
-            用户总数
+            歌单总数
           </el-text>
         </div>
       </el-col>
@@ -87,7 +75,7 @@
   padding: 15px 0 0 0;
   border-radius: 4px;
   min-height: 3.5rem;
-  background-color: red;
+  background-color: #FFFFFF;
   text-align: center;
 }
 .text{

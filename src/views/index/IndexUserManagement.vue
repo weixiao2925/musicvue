@@ -66,6 +66,13 @@ function getSearch(page) {
       (data) => {
         tableData.value = data.userDataList;
         pageCount.value = data.count;
+        for (let i=0;i<pageCount.value;i++) {
+          fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${tableData.value[i].id}`,(data)=>{
+            // console.log(data)
+            tableData.value[i].avatarUrl=data;
+            // console.log(tableData.value)
+          })
+        }
       },
       (errorMessage, errorCode) => {
         // 错误的处理逻辑
