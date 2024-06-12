@@ -14,6 +14,8 @@ function goTo(route) {
 
 function lougoutP() {
   logout(()=>{
+    window.localStorage.clear()
+    window.sessionStorage.clear()
     goTo('/')
   })
 }

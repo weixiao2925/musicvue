@@ -54,6 +54,10 @@ function fetchAndDisplayFile(url, success, errorCallback) {
         if (errorCallback) errorCallback(error);
     });
 }
+//判断有没有登录过
+function unauthorized_() {
+    return !takeAccessToken()
+}
 
 //----内部工具方法区
 //内部Post（1）
@@ -132,5 +136,6 @@ export {
     get,
     post,
     uploadFile,
-    fetchAndDisplayFile
+    fetchAndDisplayFile,
+    unauthorized_
 }
