@@ -47,6 +47,7 @@ onMounted(async () => {
   const seriesData_userSex = userSexList.map(userSexList => userSexList.sum);
   //开始定制
   userSex.setOption({
+    color:["#87CEFA","lightGreen","#FFC0CB"],
     legend: {
       orient: 'vertical',
       x: 'left'
@@ -66,6 +67,7 @@ onMounted(async () => {
   const xAxisData_songType = songTypeList.map(songTypeList => songTypeList.value);
   const seriesData_songType = songTypeList.map(songTypeList => songTypeList.sum);
   songType.setOption({
+    color:["#19D4AE"],
     legend: {
       orient: 'vertical',
     },
@@ -89,6 +91,7 @@ onMounted(async () => {
   const xAxisData_singerSex = singerSexList.map(singerSexList => singerSexList.value);
   const seriesData_singerSex = singerSexList.map(singerSexList => singerSexList.sum);
   singerSex.setOption({
+    color: ["#FF1493", "#00FF7F", "#FFD700", "#00BFFF", "#EE82EE"],
     legend: {
       orient: 'vertical',
       x: 'left'
@@ -109,6 +112,7 @@ onMounted(async () => {
   const xAxisData_singerNation = singerNationList.map(singerNationList => singerNationList.value);
   const seriesData_singerNation = singerNationList.map(singerNationList => singerNationList.sum);
   singerNation.setOption({
+    color: ["#03A9F4"],
     legend: {
       orient: 'vertical',
     },

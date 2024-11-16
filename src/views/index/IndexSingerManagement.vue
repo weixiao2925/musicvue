@@ -251,6 +251,7 @@ const uploadFile_Button = (row) => {
           :data="tableData"
           border
           flexible
+          header-row-style="color:red"
       >
         <el-table-column  type="selection"/>
         <el-table-column  label="歌手id" property="singer_id"  align="center" min-width="20"/>

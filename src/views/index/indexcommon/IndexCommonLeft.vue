@@ -33,19 +33,34 @@ const toggleCollapse = () => {
   <div >
     <div>
       <div id="menu_left" style="float:left;height: 100%;">
-        <div v-if="!isCollapse" style="padding: 10px 10px 10px 20px;">音乐管理系统</div>
+        <div v-if="!isCollapse" style="padding: 10px 0 10px 15px;text-align: left">
+          <div style="">
+            <el-image
+                style="width:120px;"
+                class="logo"
+                src="https://element-plus.org/images/element-plus-logo.svg"
+            />
+          </div>
+          <span style="color: #f3f3f3">
+            音乐管理系统
+          </span>
+        </div>
         <el-menu
             :default-active="indexRouter.index_route"
             :collapse="isCollapse"
             class="el-menu-vertical-demo"
             @select="handleSelect"
             @close="handleClose"
-            style="height: 100vh"
+            style="height: 100vh;"
             :router="true"
+            background-color="#334155"
+            text-color="#fff"
         >
           <el-menu-item index="/index">
             <el-icon size="15px"><House /></el-icon>
-            <template #title>系统首页</template>
+            <template #title >
+                系统首页
+            </template>
           </el-menu-item>
           <el-menu-item index="/index-user">
             <el-icon size="15px"><Notification /></el-icon>
@@ -61,10 +76,10 @@ const toggleCollapse = () => {
           </el-menu-item>
         </el-menu>
       </div>
-      <div style="float:left;">
-        <el-radio-group v-model="isCollapse">
-          <el-button @click="toggleCollapse" style="height: 2rem" >
-            <el-icon ><Operation /></el-icon>
+      <div style="float:left;background-color: #334155;">
+        <el-radio-group v-model="isCollapse" >
+          <el-button @click="toggleCollapse" style="height: 2rem;background-color: #334155;color: #f3f3f3" type="primary" >
+            <el-icon style=""><Operation /></el-icon>
           </el-button>
         </el-radio-group>
       </div>
@@ -77,7 +92,7 @@ const toggleCollapse = () => {
 #menu_left{
   float: left;
   height: 100vh;
-  background-color: #cee7c9;
+  background-color: #334155;
 }
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 150px;

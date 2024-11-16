@@ -119,7 +119,7 @@ function changeData() {
   }
 
   // 继续你的数据更新逻辑...
-  get(`/api/index/changePersonalOne?username=${form.email}&name=${form.name}&sex=${form.sex}&birthDateString=${birthDateString}&region=${form.region}`, (data) => {
+  get(`/api/index/changePersonalOne?username=${form.email}&name=${form.name}&sex=${form.sex}&birthDateString=${birthDateString}&region=${form.region}&signature=${form.signature}`, (data) => {
     ElMessage.success("修改成功")
   })
 }

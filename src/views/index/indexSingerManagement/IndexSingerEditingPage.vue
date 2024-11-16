@@ -191,10 +191,10 @@ function changeSingerData() {
 
 
           <el-button style="margin-right: 4vh;" v-if="form.isDisabled" @click="changeDisable">
-            添加信息
+            编辑信息
           </el-button>
           <el-button style="margin-right: 4vh;" v-if="!form.isDisabled" @click="affirm">
-            添加
+            确认编辑
           </el-button>
           <el-button v-if="!form.isDisabled" @click="quit">
             退出

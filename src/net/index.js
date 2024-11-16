@@ -1,5 +1,6 @@
 import axios from "axios";
 import {ElMessage} from "element-plus";
+import {userInfoStore} from "@/store/user.js";
 
 /**
  * ----常量区
@@ -16,6 +17,10 @@ function loginP(email,password,remember,success, failure = defaultFailure) {
         'Content-Type': 'application/x-www-form-urlencoded'
     },(data)=>{
         storeAccessToken(remember,data.token,data.expire)
+        // console.log(data)
+        const rootUserData=userInfoStore()
+        rootUserData.id=data.id
+        // console.log(rootUserData.id)
         ElMessage.success(`登陆成功,欢迎${data.username}`)
         success(data)
     },failure)

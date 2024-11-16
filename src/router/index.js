@@ -79,14 +79,14 @@ const router=createRouter({
     routes
 })
 //路由守卫
-router.beforeEach((to,from,next)=>{
-    const isUnauthorized=unauthorized_()
-    if (to.name.startsWith('welcome-')&& !isUnauthorized){//已经登录了，就不能访问welcome-的页面，直接定向到index页面
-        next('/index')
-    }else if (to.fullPath.startsWith('/index')&& isUnauthorized){//要是用户没登陆直接访问index就定向到/
-        next('/')
-    }else {//正常情况就正常访问
-        next()
-    }
-})
+// router.beforeEach((to,from,next)=>{
+//     const isUnauthorized=unauthorized_()
+//     if (to.name.startsWith('welcome-')&& !isUnauthorized){//已经登录了，就不能访问welcome-的页面，直接定向到index页面
+//         next('/index')
+//     }else if (to.fullPath.startsWith('/index')&& isUnauthorized){//要是用户没登陆直接访问index就定向到/
+//         next('/')
+//     }else {//正常情况就正常访问
+//         next()
+//     }
+// })
 export default router;

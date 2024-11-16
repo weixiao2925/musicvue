@@ -218,10 +218,16 @@ const uploadFile_Button = (row) => {
       </div>
     </el-col>
   </el-row>
-  <div>
-    <el-button type="danger" @click="handDeleteSongs">批量删除</el-button>
-  </div>
+  <el-row>
+    <el-col :span="2">
+      <div>
+        <el-button type="danger" @click="handDeleteSongs">批量删除</el-button>
+      </div>
+    </el-col>
+    <el-col :span="2">
 
+    </el-col>
+  </el-row>
   <el-dialog v-model="dialogFormVisible_change"
              destroy-on-close
              center
@@ -240,6 +246,7 @@ const uploadFile_Button = (row) => {
         :data="tableData"
         border
         flexible
+        header-row-style="color:red"
     >
       <el-table-column  type="selection"/>
       <el-table-column  label="歌单id" property="playlist_id"  align="center" min-width="20"/>

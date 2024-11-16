@@ -212,17 +212,24 @@ const uploadFile_Button = (row) => {
           </div>
         </el-col>
       </el-row>
-      <div>
-        <el-button type="danger" @click="handDeleteUsers">批量删除</el-button>
-      </div>
+      <el-row>
+        <el-col :span="2">
+          <div>
+            <el-button type="danger" @click="handDeleteUsers">批量删除</el-button>
+          </div>
+        </el-col>
+        <el-col :span="2">
 
-  <div>
+        </el-col>
+      </el-row>
+  <div style="z-index: 1000">
     <el-table
-      style="width: 100%"
+      style="width: 100%;"
       @selection-change="handSelectChange"
       :data="tableData"
       border
       flexible
+      header-row-style="color:red"
     >
       <el-table-column  type="selection"/>
       <el-table-column  label="用户id" property="id"  align="center" min-width="20"/>
