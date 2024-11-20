@@ -135,7 +135,18 @@ function changeSingerData() {
           <el-row :gutter="20">
             <el-col :span="12">
               <el-form-item label="风格">
-                <el-input v-model="form.category" class="input" :disabled="form.isDisabled"></el-input>
+                <el-select
+                    v-model="form.category"
+                    :disabled="form.isDisabled"
+                    class="input"
+                >
+                  <el-option label="华语" value="华语" />
+                  <el-option label="欧美" value="欧美"/>
+                  <el-option label="纯音乐" value="纯音乐"/>
+                  <el-option label="韩语" value="韩语"/>
+                  <el-option label="日语" value="日语"/>
+                  <el-option label="其他" value="其他"/>
+                </el-select>
               </el-form-item>
             </el-col>
             <el-col :span="12">

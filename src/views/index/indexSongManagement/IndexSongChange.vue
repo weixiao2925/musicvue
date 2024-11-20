@@ -196,7 +196,9 @@ const uploadFile_Button = () => {
                   <el-option label="粤语" value="粤语"/>
                   <el-option label="欧美" value="欧美"/>
                   <el-option label="纯音乐" value="纯音乐"/>
+                  <el-option label="韩语" value="韩语"/>
                   <el-option label="日语" value="日语"/>
+                  <el-option label="其他" value="其他"/>
                 </el-select>
 
               </el-form-item>
