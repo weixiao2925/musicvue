@@ -6,11 +6,13 @@ import {reactive} from "vue";
 
 const props=defineProps({
   name:String,
+  username:String,
   person:Boolean
 })
 
 const data=reactive({
   name:"",
+  username:props.username,
   person:false
 })
 data.person=props.person

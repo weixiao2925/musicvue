@@ -4,13 +4,84 @@ import {menuInfoStore} from "@/store/menu.js";
 import {useRouter} from "vue-router";
 import {userInfoStore} from "@/store/user.js";
 import {PieChart, User} from "@element-plus/icons-vue";
+import {reactive, ref} from "vue";
+import {fetchAndDisplayFile, get, uploadFile} from "@/net/index.js";
+import {usersInfoStore} from "@/store/users.js";
+import {ElMessage} from "element-plus";
 //获取值
 const props=defineProps({
-  name:String
+  name:String,
+  person:Boolean,
 })
 //仓库
 const indexRouter=menuInfoStore()
-
+const users=usersInfoStore()
+const avatarRef=ref()
+const form=reactive({
+  isDisabled:true,
+  person:props.person,
+  name:props.name,
+  id:users.id,
+  sex:"",
+  email:"",
+  birth_date:"",
+  signature:"",
+  nation:"中国",
+  region:"",
+  avatarUrl:"",
+  registrationTime:"",
+})
+//根据身份给表格赋值
+function getUserData() {
+  if (form.person){
+    const rootUserData=userInfoStore()
+    get(`/api/index/getRootPersonalOne?username=${rootUserData.email}`,(data)=>{
+      form.id=rootUserData.id;
+      form.name=data.userDataOne.name
+      form.sex=data.userDataOne.sex
+      form.email=data.userDataOne.email
+      form.birth_date=new Date(data.userDataOne.birth_date).toDateString()
+      form.signature=data.userDataOne.signature
+      form.region=data.userDataOne.region
+      form.avatarUrl=data.userDataOne.avatarUrl
+      form.registrationTime=data.userDataOne.registrationTime
+    })
+  }
+  else {
+    const UsersData=usersInfoStore()
+    get(`/api/index/getPersonalOne?username=${UsersData.email}`,(data)=>{
+      form.id=UsersData.id;
+      form.name=data.userDataOne.name
+      form.sex=data.userDataOne.sex
+      form.email=data.userDataOne.email
+      form.birth_date=new Date(data.userDataOne.birth_date).toDateString()
+      form.signature=data.userDataOne.signature
+      form.region=data.userDataOne.region
+      form.avatarUrl=data.userDataOne.avatarUrl
+      form.registrationTime=data.userDataOne.registrationTime
+    })
+  }
+}
+getUserData()
+//获取头像
+const getAvatar=()=>{
+  fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${form.id}`,(data)=>{
+    avatarRef.value=data;
+  })
+}
+getAvatar()
+//修改头像
+const changeAvatar=(file)=>{
+  console.log(file)
+  const vo = reactive({
+    user_id:form.id,
+    file:file.raw,
+  })
+  uploadFile('/api/index/upUserAvatar',vo,()=>{
+    ElMessage.success("更换成功")
+    getAvatar()
+  })
+}
 //跳转
 const router=useRouter()
 function goTo(route) {
@@ -23,7 +94,6 @@ const comeback=()=>{
 </script>
 
 <template>
-
   <el-row>
     <div>
       <el-button @click="comeback">
@@ -32,20 +102,31 @@ const comeback=()=>{
     </div>
   </el-row>
     <div id="personal_l">
-      <div style="padding-top: 4vh;">
-        <el-avatar :size="70"/>
+      <div class="avatar-uploader">
+        <el-upload
+            :on-change="changeAvatar"
+            action="#"
+            :show-file-list="false"
+        >
+          <div class="avatar-uploader-trigger">
+            <el-avatar :src="avatarRef" :size="70"></el-avatar>
+            <div class="avatar-uploader-mask">
+              更换头像
+            </div>
+          </div>
+        </el-upload>
       </div>
       <div>
-        {{ props.name }}
+        {{ form.name }}
       </div>
       <div>
         <el-text>
-          签名
+          {{form.signature===null?'暂无签名':form.signature}}
         </el-text>
       </div>
       <div style="margin-bottom: 3vh;">
         <el-text>
-          注册时间：
+          注册时间：{{form.registrationTime}}
         </el-text>
       </div>
       <div style="display: flex;justify-content: center;"><!-- 设置水平居中 -->
@@ -68,5 +149,35 @@ const comeback=()=>{
     height: 100%;
     background-color: #fdfdfd;
     text-align: center;
+  }
+  .avatar-uploader {
+    padding-top:  50px;
+    position: relative;
+    display: inline-block;
+  }
+
+  .avatar-uploader-trigger {
+    position: relative;
+    display: inline-block;
+  }
+
+  .avatar-uploader-mask {
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 98%;
+    height: 92%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 70px; /* 这个值应该等于头像的高度 */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .avatar-uploader-trigger:hover .avatar-uploader-mask {
+    opacity: 1;
   }
 </style>

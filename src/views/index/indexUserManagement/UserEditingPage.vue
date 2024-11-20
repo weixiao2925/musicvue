@@ -6,7 +6,8 @@ import {usersInfoStore} from "@/store/users.js";
 
 const userStore=usersInfoStore()
 const data=reactive({
-  name:userStore.name
+  name:userStore.name,
+  username:userStore.email,
 })
 </script>
 

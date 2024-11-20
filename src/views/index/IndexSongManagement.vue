@@ -257,6 +257,7 @@ const uploadFile_ImgButton = (row) => {
       form.aFile=null
       // uploadRef.value= null
       ElMessage.success("上传图片文件成功")
+      getData()
     });
   }
   getData()

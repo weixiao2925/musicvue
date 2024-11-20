@@ -1,12 +1,9 @@
 <script setup>
 
 import {reactive, ref} from "vue";
-import testImage from '@/assets/test.jpg'
 import {Search} from "@element-plus/icons-vue";
-import {singerInfoStore} from "@/store/singer.js";
 import {useRouter} from "vue-router";
 import {fetchAndDisplayFile, get, uploadFile} from "@/net/index.js";
-import IndexSingerAdd from "@/views/index/indexSingerManagement/IndexSingerAdd.vue";
 import {ElMessage, ElMessageBox, genFileId} from "element-plus";
 
 import IndexSongChange from "@/views/index/indexSongManagement/IndexSongChange.vue";

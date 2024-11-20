@@ -88,6 +88,7 @@ function goTo(route) {
 function editing(row) {
   const userStore=usersInfoStore()
   // console.log(row.row)
+  userStore.id=row.row.id;
   userStore.name=row.row.name;
   userStore.email=row.row.email;
   goTo('/index-userEditor')
@@ -189,6 +190,7 @@ const uploadFile_Button = (row) => {
       form.aFile=null
       // uploadRef.value= null
       ElMessage.success("上传图片文件成功")
+      getData()
     });
   }
   getData()
