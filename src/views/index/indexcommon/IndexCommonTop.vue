@@ -4,7 +4,14 @@ import {userInfoStore} from "@/store/user.js";
 import {fetchAndDisplayFile, logout} from "@/net/index.js";
 import {useRouter} from "vue-router";
 
-
+//公共仓库
+const userStore=userInfoStore()
+// console.log(userStore.name)
+//用户信息赋值
+const tableData=reactive({
+  name:userStore.name,
+  id:userStore.id,
+})
 
 //跳转
 const router=useRouter()
@@ -23,14 +30,7 @@ function personage() {
     goTo('/index-individual')
 }
 
-//公共仓库
-const userStore=userInfoStore()
-// console.log(userStore.name)
-//用户信息赋值
-const tableData=reactive({
-  name:userStore.name,
-  id:userStore.id,
-})
+
 const avatar=ref()
 const getAvatar=()=>{
   fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${tableData.id}`,(data)=>{

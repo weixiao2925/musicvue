@@ -24,6 +24,7 @@ const form=reactive({
   region:"",
   avatarUrl:"",
   registrationTime:"",
+  dataLoading:true,
 })
 // console.log(form.name)
 const changeDisable=()=>{
@@ -75,6 +76,7 @@ function getUserData() {
       form.region=data.userDataOne.region
       form.avatarUrl=data.userDataOne.avatarUrl
       form.registrationTime=data.userDataOne.registrationTime
+      form.dataLoading=false
     })
   }
   else {
@@ -88,6 +90,7 @@ function getUserData() {
       form.region=data.userDataOne.region
       form.avatarUrl=data.userDataOne.avatarUrl
       form.registrationTime=data.userDataOne.registrationTime
+      form.dataLoading=false
     })
   }
 }
@@ -135,7 +138,7 @@ function changeData() {
         <el-text size="large" type="info">Personal information</el-text>
     </div>
   </el-row>
-  <div id="personal_r">
+  <div id="personal_r" v-loading="form.dataLoading">
 
     <div style="padding-left: 6vh;">
       <div style="padding: 4vh 0 1vh 0;">

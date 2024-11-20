@@ -21,7 +21,7 @@ const form=reactive({
   isDisabled:true,
   person:props.person,
   name:props.name,
-  id:users.id,
+  id:'',
   sex:"",
   email:"",
   birth_date:"",
@@ -30,6 +30,8 @@ const form=reactive({
   region:"",
   avatarUrl:"",
   registrationTime:"",
+  avatarLoading:true,
+  dataLoading:true,
 })
 //根据身份给表格赋值
 function getUserData() {
@@ -45,6 +47,7 @@ function getUserData() {
       form.region=data.userDataOne.region
       form.avatarUrl=data.userDataOne.avatarUrl
       form.registrationTime=data.userDataOne.registrationTime
+      form.dataLoading=false
     })
   }
   else {
@@ -59,15 +62,29 @@ function getUserData() {
       form.region=data.userDataOne.region
       form.avatarUrl=data.userDataOne.avatarUrl
       form.registrationTime=data.userDataOne.registrationTime
+      form.dataLoading=false
     })
   }
 }
 getUserData()
 //获取头像
 const getAvatar=()=>{
-  fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${form.id}`,(data)=>{
-    avatarRef.value=data;
-  })
+  if (form.person){
+    const rootUserData=userInfoStore()
+    fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${rootUserData.id}`,(data)=>{
+      form.id=rootUserData.id;
+      avatarRef.value=data;
+      form.avatarLoading=false;
+    })
+  }
+  else {
+    const UsersData=usersInfoStore()
+    fetchAndDisplayFile(`/api/index/getUserAvatar?user_id=${UsersData.id}`,(data)=>{
+      form.id=UsersData.id;
+      avatarRef.value=data;
+      form.avatarLoading=false;
+    })
+  }
 }
 getAvatar()
 //修改头像
@@ -101,7 +118,7 @@ const comeback=()=>{
       </el-button>
     </div>
   </el-row>
-    <div id="personal_l">
+    <div id="personal_l" v-loading="(form.avatarLoading&&form.dataLoading)">
       <div class="avatar-uploader">
         <el-upload
             :on-change="changeAvatar"
