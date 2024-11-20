@@ -187,7 +187,18 @@ const uploadFile_Button = () => {
             </el-col>
             <el-col :span="12">
               <el-form-item label="类型">
-                <el-input v-model="form.songType" class="input" :disabled="form.isDisabled"></el-input>
+                <el-select
+                    v-model="form.songType"
+                    :disabled="form.isDisabled"
+                    class="input"
+                >
+                  <el-option label="华语" value="华语" />
+                  <el-option label="粤语" value="粤语"/>
+                  <el-option label="欧美" value="欧美"/>
+                  <el-option label="纯音乐" value="纯音乐"/>
+                  <el-option label="日语" value="日语"/>
+                </el-select>
+
               </el-form-item>
             </el-col>
           </el-row>

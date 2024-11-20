@@ -158,7 +158,14 @@ function changeData() {
             </el-col>
             <el-col :span="12">
               <el-form-item label="性别">
-                  <el-input v-model="form.sex" class="input" :disabled="form.isDisabled"></el-input>
+                <el-select
+                    v-model="form.sex"
+                    :disabled="form.isDisabled"
+                >
+                  <el-option label="男" value="男" />
+                  <el-option label="女" value="女"/>
+                  <el-option label="保密" value="保密"/>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
