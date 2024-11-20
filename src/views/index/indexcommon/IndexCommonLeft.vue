@@ -1,8 +1,9 @@
 <script setup>
 
 import {ref} from "vue";
-import {House, Notification, Operation} from "@element-plus/icons-vue";
+import {Avatar, House, Notification, Operation, User} from "@element-plus/icons-vue";
 import {menuInfoStore} from "@/store/menu.js";
+import {Icon} from "@iconify/vue";
 
 // 获取仓库数据
 const indexRouter=menuInfoStore()
@@ -63,15 +64,15 @@ const toggleCollapse = () => {
             </template>
           </el-menu-item>
           <el-menu-item index="/index-user">
-            <el-icon size="15px"><Notification /></el-icon>
+            <el-icon size="15px"><User /></el-icon>
             <template #title>用户管理</template>
           </el-menu-item>
           <el-menu-item index="/index-singer">
-            <el-icon size="15px"><Notification /></el-icon>
+            <el-icon size="15px"><Avatar /></el-icon>
             <template #title>歌手管理</template>
           </el-menu-item>
           <el-menu-item index="/index-playlist">
-            <el-icon size="15px"><Notification /></el-icon>
+            <el-icon size="15px"><Operation /></el-icon>
             <template #title>歌单管理</template>
           </el-menu-item>
         </el-menu>
