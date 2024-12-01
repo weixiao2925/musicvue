@@ -137,12 +137,13 @@ const comeback=()=>{
 }
 //修改头像
 const changeAvatar=(file)=>{
-  console.log(file)
+  // console.log(file)
   const vo = reactive({
     user_id:form.id,
     file:file.raw,
   })
   uploadFile('/api/index/upUserAvatar',vo,()=>{
+    window.location.reload();
     ElMessage.success("更换成功")
     getAvatar()
   })
