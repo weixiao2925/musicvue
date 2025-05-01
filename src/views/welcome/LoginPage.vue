@@ -73,7 +73,7 @@ function userLogin() {
             </el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input style="margin-top: 1rem;  width: 20rem;" placeholder="输入密码" show-password v-model="form.password">
+            <el-input style="margin-top: 1rem;  width: 20rem;" placeholder="输入密码" clearable show-password v-model="form.password">
               <template #prefix>
                 <el-icon><Lock style="color: red"/></el-icon>
               </template>
